@@ -26,7 +26,7 @@ module.exports = (env, argv) => {
         plugins: [
             new CopyPlugin({
                 patterns: [
-                    {from: 'src/board.php', to: 'board.php'},
+                    {from: 'src/index.php', to: 'index.php'},
                     {from: 'src/manifest.json', to: 'manifest.json'},
                     {from: 'src/css', to: 'css/.' },
                     {from: 'src/icons', to: 'icons/.' },
