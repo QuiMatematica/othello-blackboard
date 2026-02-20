@@ -1,6 +1,8 @@
 RewriteEngine On
 
-DirectoryIndex board.php
+# index.php → /
+RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
+RewriteRule ^index\.php$ / [R=301,L]
 
 # forza https + non-www
 RewriteCond %{HTTPS} !=on [OR]
