@@ -6,11 +6,11 @@ module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
 
     return {
-        entry: './src/board.js',
+        entry: './src/js/othello.js',
 
         output: {
             path: path.resolve(__dirname, 'dist'),
-            filename: 'board.js',
+            filename: 'js/othello.js',
             clean: true
         },
 
@@ -26,7 +26,11 @@ module.exports = (env, argv) => {
         plugins: [
             new CopyPlugin({
                 patterns: [
-                    {from: 'src/board.php', to: 'board.php'}
+                    {from: 'src/board.php', to: 'board.php'},
+                    {from: 'src/manifest.json', to: 'manifest.json'},
+                    {from: 'src/css', to: 'css/.' },
+                    {from: 'src/icons', to: 'icons/.' },
+                    {from: 'src/images', to: 'images/.' }
                 ]
             })
         ],
