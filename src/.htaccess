@@ -1,0 +1,32 @@
+RewriteEngine On
+
+DirectoryIndex board.php
+
+# forza https + non-www
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^bb\.quiothello\.it$ [NC]
+RewriteRule ^(.*)$ https://bb.quiothello.it/$1 [R=301,L]
+
+# Imposta gli header di scadenza a "passato"
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 0 seconds"
+</IfModule>
+
+# Imposta gli header di controllo della cache
+<IfModule mod_headers.c>
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
+</IfModule>
+
+# Disabilita la cache per i file dinamici (PHP, CGI, etc.)
+<FilesMatch "\.(php|cgi|pl|htm|html|js|css|json)$">
+    FileETag None
+    <IfModule mod_headers.c>
+        Header unset ETag
+        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
+    </IfModule>
+</FilesMatch>
