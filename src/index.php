@@ -51,7 +51,88 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
     <div class="board"></div>
 
     <div class="side">
-        CONTROLLI
+
+        <div class="container-fluid p-0">
+
+        <div class="d-flex justify-content-end w-100 p-2">
+            <button class="btn btn-success">Login</button>
+        </div>
+
+            <ul class="nav nav-pills nav-fill mb-3 custom-pills" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active"
+                            id="play-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#play"
+                            type="button"
+                            role="tab">
+                        Play
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            id="set-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#set"
+                            type="button"
+                            role="tab">
+                        Set
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            id="draw-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#draw"
+                            type="button"
+                            role="tab">
+                        Draw
+                    </button>
+                </li>
+
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link"
+                            id="lessons-tab"
+                            data-bs-toggle="tab"
+                            data-bs-target="#lessons"
+                            type="button"
+                            role="tab">
+                        Lessons
+                    </button>
+                </li>
+            </ul>
+
+            <!-- TAB CONTENT -->
+            <div class="tab-content">
+
+                <div class="tab-pane fade show active"
+                     id="play"
+                     role="tabpanel">
+                    Play
+                </div>
+
+                <div class="tab-pane fade"
+                     id="set"
+                     role="tabpanel">
+                    Set
+                </div>
+
+                <div class="tab-pane fade"
+                     id="draw"
+                     role="tabpanel">
+                    Draw
+                </div>
+
+                <div class="tab-pane fade"
+                     id="lessons"
+                     role="tabpanel">
+                    Lessons
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 
