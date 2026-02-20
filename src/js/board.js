@@ -33,7 +33,7 @@ export default class Board {
             const div = document.createElement('div');
             div.classList.add('boardBorder');
             div.classList.add('reference-container');
-            div.classList.add('nord');
+            if (x > 0 && x < 9) div.classList.add('north');
             div.innerHTML = this.letters[x];
             this.gameBoard.appendChild(div);
         }
@@ -90,6 +90,7 @@ export default class Board {
             const div = document.createElement('div');
             div.classList.add('boardBorder');
             div.classList.add('reference-container');
+            if (x > 0 && x < 9) div.classList.add('south');
             div.innerHTML = this.letters[x];
             this.gameBoard.appendChild(div);
         }

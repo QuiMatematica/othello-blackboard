@@ -130,11 +130,16 @@ html, body {
     font-size: 5vmin;
 }
 
-.reference-container.nord {
-    display: flex;
+.reference-container.north {
     align-items: flex-end;
-    padding-bottom: 1vmin;
+    padding-bottom: 3vmin;
     border-bottom: .3vmin solid black;
+}
+
+.reference-container.south {
+    align-items: flex-start;
+    padding-top: 3vmin;
+    border-top: .3vmin solid black;
 }
 
 .reference-container.west {
