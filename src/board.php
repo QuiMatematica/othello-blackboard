@@ -37,79 +37,25 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
     <meta name="author" content="Claudio Signorini">
 
     <title>Othello blackboard</title>
+    <link href="<?= $root ?>css/othello.css" rel="stylesheet">
 
     <!-- PWA -->
     <link rel="manifest" href="<?= $root ?>manifest.json">
     <meta name="theme-color" content="#2c3e50">
     <link rel="icon" href="<?= $root ?>icons/icon-192.png">
-
-    <style>
-        /* Reset completo */
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden; /* NIENTE SCROLL */
-        }
-
-        .wrapper {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-        }
-
-        /* Layout orizzontale (default desktop) */
-        .board {
-            height: 100%;
-            aspect-ratio: 1 / 1;
-            background-color: #4dabf7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-        }
-
-        .side {
-            flex: 1;
-            background-color: #ff8787;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-        }
-
-        /* Layout verticale */
-        @media (orientation: portrait) {
-            .wrapper {
-                flex-direction: column;
-            }
-
-            .board {
-                width: 100%;
-                height: auto;
-            }
-
-            .side {
-                flex: 1;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
 <div class="wrapper">
-    <div class="board">
-        BOARD
-    </div>
+    <div class="board"></div>
 
     <div class="side">
-        CONTENUTO
+        CONTROLLI
     </div>
 </div>
 
-<script src="/dist/board.js"></script>
+<script src="js/othello.js"></script>
 
 </body>
 </html>
