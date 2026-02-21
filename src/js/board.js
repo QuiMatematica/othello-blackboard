@@ -1,11 +1,10 @@
 import { WHITE } from './position.js';
 import { BLACK } from './position.js';
 import {createStone, setAnimatingFlip, xmlns} from "./page";
+import Blackboard from "./blackboard";
 
 export default class Board {
 
-    container;
-    gameBoardContainer;
     gameBoard;
     grid = [];
 
@@ -13,16 +12,14 @@ export default class Board {
 
     arrows = 0;
 
-    constructor(container, onClickCallback) {
-        this.container = container;
-
-        this.gameBoardContainer = document.createElement('div');
-        this.gameBoardContainer.classList.add('game-board-container')
-        this.container.appendChild(this.gameBoardContainer)
+    constructor(onClickCallback) {
+        const gameBoardContainer = document.createElement('div');
+        gameBoardContainer.classList.add('game-board-container')
+        document.querySelector('#board').appendChild(gameBoardContainer)
 
         this.gameBoard = document.createElement('div');
         this.gameBoard.classList.add('gameBoard');
-        this.gameBoardContainer.appendChild(this.gameBoard)
+        gameBoardContainer.appendChild(this.gameBoard)
 
         this.createBoard(onClickCallback)
     }

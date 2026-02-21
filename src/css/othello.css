@@ -5,6 +5,10 @@
     --square-size: 2em;
 }
 
+html {
+    font-size: clamp(12px, 5vmin, 30px);
+}
+
 /* Reset completo */
 html, body {
     margin: 0;
@@ -20,7 +24,7 @@ html, body {
 }
 
 /* Layout orizzontale (default desktop) */
-.board {
+#board {
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: lightgray;
