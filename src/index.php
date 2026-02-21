@@ -129,39 +129,74 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                     </div>
                 </div>
 
-                <div class="tab-pane fade d-flex justify-content-center" id="set" role="tabpanel">
-                    <div class="btn-group mt-5" role="group" aria-label="Toggle group">
+                <div class="tab-pane fade" id="set" role="tabpanel">
+                    <div class="row mt-5">
+                        <div class="col d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Toggle group">
 
-                        <input type="radio" class="btn-check" name="options" id="opt1" autocomplete="off" checked>
-                        <label class="btn btn-outline-success" style="color: black;" for="opt1"><i class="bi bi-circle-fill"></i></label>
+                                <input type="radio" class="btn-check" name="options" id="black-stone" autocomplete="off"
+                                       checked>
+                                <label class="btn btn-outline-success" style="color: black;" for="black-stone"><i
+                                            class="bi bi-circle-fill"></i></label>
 
-                        <input type="radio" class="btn-check" name="options" id="opt2" autocomplete="off">
-                        <label class="btn btn-outline-success" style="color: white;" for="opt2"><i class="bi bi-circle-fill"></i></label>
+                                <input type="radio" class="btn-check" name="options" id="white-stone"
+                                       autocomplete="off">
+                                <label class="btn btn-outline-success" style="color: white;" for="white-stone"><i
+                                            class="bi bi-circle-fill"></i></label>
 
-                        <input type="radio" class="btn-check" name="options" id="opt3" autocomplete="off">
-                        <label class="btn btn-outline-success" style="color: black;" for="opt3"><i class="bi bi-x-square"></i></label>
+                                <input type="radio" class="btn-check" name="options" id="empty-square"
+                                       autocomplete="off">
+                                <label class="btn btn-outline-success" style="color: black;" for="empty-square"><i
+                                            class="bi bi-x-square"></i></label>
 
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row mt-3">
+                        <div class="col d-flex justify-content-center">
+                            <div class="btn-group" role="group" aria-label="Toggle group">
+                                <input type="radio" class="btn-check" name="turn-options" id="black-turn"
+                                       autocomplete="off"
+                                       checked>
+                                <label class="btn btn-outline-success" style="color: black;" for="black-turn"><i
+                                            class="bi bi-caret-left-fill"></i></label>
 
-                <div class="tab-pane fade"
-                     id="draw"
-                     role="tabpanel">
-                    Draw
-                </div>
+                                <input type="radio" class="btn-check" name="turn-options" id="white-turn"
+                                       autocomplete="off">
+                                <label class="btn btn-outline-success" style="color: white;" for="white-turn"><i
+                                            class="bi bi-caret-right-fill"></i></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col d-flex justify-content-center">
+                            <button id="reset-position" class="btn btn-success  lh-1">
+                                <i class="bi bi-circle-fill" style="color: white;"></i><i class="bi bi-circle-fill"
+                                                                                          style="color: black;"></i><br>
+                                <i class="bi bi-circle-fill" style="color: black;"></i><i class="bi bi-circle-fill"
+                                                                                          style="color: white;"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                <div class="tab-pane fade"
-                     id="lessons"
-                     role="tabpanel">
-                    Lessons
-                </div>
+                    <div class="tab-pane fade"
+                         id="draw"
+                         role="tabpanel">
+                        Draw
+                    </div>
 
+                    <div class="tab-pane fade"
+                         id="lessons"
+                         role="tabpanel">
+                        Lessons
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="js/othello.js"></script>
+    <script src="js/othello.js"></script>
 
 </body>
 </html>

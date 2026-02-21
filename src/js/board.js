@@ -15,7 +15,7 @@ export default class Board {
     constructor(onClickCallback) {
         const gameBoardContainer = document.createElement('div');
         gameBoardContainer.classList.add('game-board-container')
-        document.querySelector('#board').appendChild(gameBoardContainer)
+        document.getElementById('board').appendChild(gameBoardContainer)
 
         this.gameBoard = document.createElement('div');
         this.gameBoard.classList.add('gameBoard');

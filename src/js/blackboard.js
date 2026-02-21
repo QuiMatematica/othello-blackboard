@@ -1,4 +1,4 @@
-import Position, {WHITE} from "./position";
+import Position, {BLACK, EMPTY, WHITE} from "./position";
 import Board from "./board";
 import Square from "./square";
 import {isAnimatingFlip} from "./page";
@@ -8,6 +8,8 @@ let theBoard;
 export default class Blackboard {
 
     currentPosition;
+    playMode;
+    editMode;
     currentMode;
     board;
 
@@ -16,15 +18,32 @@ export default class Blackboard {
 
         this.currentPosition = Position.getStartingPosition();
 
-        this.board = new Board(onClick);
+        this.board = new Board((event) => {
+            if (isAnimatingFlip()) {
+                return;
+            }
+
+            const div = event.currentTarget;
+            const {x, y} = div.dataset;  // NOTE: strings, not ints
+            this.currentMode.onClick(x, y);
+        });
         this.board.setPosition(this.currentPosition);
 
-        this.currentMode = new PlayMode(this);
-        this.currentMode.update();
-    }
+        this.playMode = new PlayMode(this);
+        this.playMode.update();
 
-    onClick(x, y) {
-        this.currentMode.onClick(x, y);
+        this.editMode = new EditMode(this);
+
+        this.currentMode = this.playMode;
+
+        document.getElementById('play-tab').addEventListener('click', () => {
+            this.currentMode = this.playMode;
+            console.log("Play mode");
+        });
+        document.getElementById('set-tab').addEventListener('click', () => {
+            this.currentMode = this.editMode;
+            console.log("Edit mode");
+        })
     }
 
     update(nextPosition) {
@@ -39,14 +58,64 @@ export default class Blackboard {
 
 }
 
-function onClick(event) {
-    if (isAnimatingFlip()) {
-        return;
+class EditMode {
+
+    board;
+    currentColor;
+
+    constructor(board) {
+        this.board = board;
+        this.currentColor = BLACK;
+
+        document.getElementById('black-stone').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                this.currentColor = BLACK;
+            }
+        });
+        document.getElementById('white-stone').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                this.currentColor = WHITE;
+            }
+        });
+        document.getElementById('empty-square').addEventListener('change', (e) => {
+            if (e.target.checked) {
+                this.currentColor = EMPTY;
+            }
+        });
+
+        document.getElementById('black-turn').addEventListener('change', (e) => {
+            let position = this.board.currentPosition;
+            position = position.changeTurn(BLACK);
+            this.board.update(position);
+            this.board.playMode.update();
+        });
+        document.getElementById('white-turn').addEventListener('change', (e) => {
+            let position = this.board.currentPosition;
+            position = position.changeTurn(WHITE);
+            this.board.update(position);
+            this.board.playMode.update();
+        });
+
+        document.getElementById('reset-position').addEventListener('click', () => {
+            const position = Position.getStartingPosition();
+            this.board.update(position);
+            this.board.playMode.update();
+            this.update();
+        });
     }
 
-    const div = event.currentTarget;
-    const {x, y} = div.dataset;  // NOTE: strings, not ints
-    theBoard.onClick(x, y);
+    onClick(x, y) {
+        const square = new Square(parseInt(x), parseInt(y));
+        let position = this.board.currentPosition;
+        position = position.setStone(square, this.currentColor);
+        this.board.update(position);
+        this.board.playMode.update();
+    }
+
+    update() {
+        this.board.currentPosition.turn === BLACK ? document.getElementById('black-turn').checked = true : document.getElementById('white-turn').checked = true;
+    }
+
 }
 
 class PlayMode {
@@ -61,11 +130,11 @@ class PlayMode {
 
     constructor(board) {
         this.board = board;
-        this.scoreElements.black = document.querySelector('#black-score');
-        this.scoreElements.white = document.querySelector('#white-score');
-        this.turnElement = document.querySelector('#turn');
+        this.scoreElements.black = document.getElementById('black-score');
+        this.scoreElements.white = document.getElementById('white-score');
+        this.turnElement = document.getElementById('turn');
 
-        this.first = document.querySelector('#first');
+        this.first = document.getElementById('first');
         this.first.addEventListener('click', () => {
             let curPosition = this.board.currentPosition;
             let prevPosition = curPosition.prevPosition;
@@ -78,7 +147,7 @@ class PlayMode {
                 this.update();
             }
         })
-        this.prev = document.querySelector('#prev');
+        this.prev = document.getElementById('prev');
         this.prev.addEventListener('click', () => {
             const prevPosition = this.board.currentPosition.prevPosition;
             if (prevPosition != null) {
@@ -86,7 +155,7 @@ class PlayMode {
                 this.update();
             }
         })
-        this.next = document.querySelector('#next');
+        this.next = document.getElementById('next');
         this.next.addEventListener('click', () => {
             const nextPosition = this.board.currentPosition.nextPosition;
             if (nextPosition != null) {
@@ -94,7 +163,7 @@ class PlayMode {
                 this.update();
             }
         })
-        this.last = document.querySelector('#last');
+        this.last = document.getElementById('last');
         this.last.addEventListener('click', () => {
             let curPosition = this.board.currentPosition;
             let nextPosition = curPosition.nextPosition;
@@ -116,6 +185,7 @@ class PlayMode {
         if (nextPosition != null) {
             this.board.play(nextPosition);
             this.update();
+            this.board.editMode.update();
         }
     }
 
