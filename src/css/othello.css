@@ -290,7 +290,7 @@ svg {
 
 .cross-line {
     display: none;
-    stroke-width: .1vmin;
+    stroke-width: 1pt;
     stroke-linecap: round;
 }
 

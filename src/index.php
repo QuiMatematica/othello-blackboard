@@ -54,9 +54,9 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
 
         <div class="container-fluid p-0">
 
-        <div class="d-flex justify-content-end w-100 p-2">
-            <button class="btn btn-success">Login</button>
-        </div>
+            <div class="d-flex justify-content-end w-100 p-2">
+                <button class="btn btn-success">Login</button>
+            </div>
 
             <ul class="nav nav-pills nav-fill mb-3 custom-pills" id="mainTabs" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -66,7 +66,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                             data-bs-target="#play"
                             type="button"
                             role="tab">
-                        Play
+                        <i class="bi bi-play-btn"></i>
                     </button>
                 </li>
 
@@ -77,7 +77,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                             data-bs-target="#set"
                             type="button"
                             role="tab">
-                        Set
+                        <i class="bi bi-gear"></i>
                     </button>
                 </li>
 
@@ -88,7 +88,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                             data-bs-target="#draw"
                             type="button"
                             role="tab">
-                        Draw
+                        <i class="bi bi-pencil"></i>
                     </button>
                 </li>
 
@@ -99,7 +99,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                             data-bs-target="#lessons"
                             type="button"
                             role="tab">
-                        Lessons
+                        <i class="bi bi-folder"></i>
                     </button>
                 </li>
             </ul>
@@ -107,10 +107,24 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
             <!-- TAB CONTENT -->
             <div class="tab-content">
 
-                <div class="tab-pane fade show active"
-                     id="play"
-                     role="tabpanel">
-                    Play
+                <div class="tab-pane fade show active" id="play" role="tabpanel">
+                    <div class="d-flex justify-content-center flex-nowrap gap-2">
+                        <div id="black-counter" class="text-center px-2">2</div>
+                        <div class="text-center px-2"><i class="bi bi-circle-fill"></i></div>
+                        <div class="text-center px-2"><i id="turn-arrow" class="bi bi-caret-left-fill"></i></div>
+                        <div class="text-center px-2"><i class="bi bi-circle"></i></div>
+                        <div id="white-counter" class="text-center px-2">2</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Gruppo di controlli">
+                            <button class="btn btn-success bi bi-chevron-bar-left" data-counter="0"
+                                    disabled=""></button>
+                            <button class="btn btn-success bi bi-chevron-left" data-counter="0" disabled=""></button>
+                            <button class="btn btn-success bi bi-chevron-right" data-counter="0" disabled=""></button>
+                            <button class="btn btn-success bi bi-chevron-bar-right" data-counter="0"
+                                    disabled=""></button>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tab-pane fade"
