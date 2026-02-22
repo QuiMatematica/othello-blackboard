@@ -28,6 +28,18 @@ export default class Position {
         this.errors = [];
     }
 
+    static getEmptyPosition() {
+        const grid = [];
+        for (let x = 0; x < 8; x++) {
+            const row = [];
+            grid.push(row);
+            for (let y = 0; y < 8; y++) {
+                row.push(EMPTY);
+            }
+        }
+        return new Position(grid, BLACK)
+    }
+
     static getStartingPosition() {
         const grid = [];
         for (let x = 0; x < 8; x++) {
