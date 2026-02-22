@@ -170,11 +170,17 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                     </div>
                     <div class="row mt-3">
                         <div class="col d-flex justify-content-center">
-                            <button id="reset-position" class="btn btn-success  lh-1">
+                            <button id="reset-position" class="btn btn-success  lh-1 mx-2">
                                 <i class="bi bi-circle-fill" style="color: white;"></i><i class="bi bi-circle-fill"
                                                                                           style="color: black;"></i><br>
                                 <i class="bi bi-circle-fill" style="color: black;"></i><i class="bi bi-circle-fill"
                                                                                           style="color: white;"></i>
+                            </button>
+                            <button id="empty-position" class="btn btn-success  lh-1 mx-2">
+                                <i class="bi bi-square" style="color: black;"></i><i class="bi bi-square"
+                                                                                          style="color: black;"></i><br>
+                                <i class="bi bi-square" style="color: black;"></i><i class="bi bi-square"
+                                                                                          style="color: black;"></i>
                             </button>
                         </div>
                     </div>

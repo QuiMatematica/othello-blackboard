@@ -46,7 +46,7 @@ html, body {
         flex-direction: column;
     }
 
-    .board {
+    #board {
         width: 100%;
         height: auto;
     }

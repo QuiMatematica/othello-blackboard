@@ -102,6 +102,14 @@ class EditMode {
             this.board.playMode.update();
             this.update();
         });
+
+        document.getElementById('empty-position').addEventListener('click', () => {
+            const position = Position.getEmptyPosition();
+            this.board.update(position);
+            this.board.playMode.update();
+            this.update();
+        });
+
     }
 
     onClick(x, y) {
