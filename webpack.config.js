@@ -28,6 +28,8 @@ module.exports = (env, argv) => {
                 patterns: [
                     {from: 'src/index.php', to: 'index.php'},
                     {from: 'src/manifest.json', to: 'manifest.json'},
+                    {from: 'src/offline.html', to: 'offline.html'},
+                    {from: 'src/service-worker.js', to: 'service-worker.js'},
                     {from: 'src/css', to: 'css/.' },
                     {from: 'src/icons', to: 'icons/.' },
                     {from: 'src/images', to: 'images/.' }
