@@ -1,11 +1,10 @@
 import { WHITE } from './position.js';
 import { BLACK } from './position.js';
 import {createStone, setAnimatingFlip, xmlns} from "./page";
+import Blackboard from "./blackboard";
 
 export default class Board {
 
-    container;
-    gameBoardContainer;
     gameBoard;
     grid = [];
 
@@ -13,16 +12,14 @@ export default class Board {
 
     arrows = 0;
 
-    constructor(container, onClickCallback) {
-        this.container = container;
-
-        this.gameBoardContainer = document.createElement('div');
-        this.gameBoardContainer.classList.add('game-board-container')
-        this.container.appendChild(this.gameBoardContainer)
+    constructor(onClickCallback) {
+        const gameBoardContainer = document.createElement('div');
+        gameBoardContainer.classList.add('game-board-container')
+        document.getElementById('board').appendChild(gameBoardContainer)
 
         this.gameBoard = document.createElement('div');
         this.gameBoard.classList.add('gameBoard');
-        this.gameBoardContainer.appendChild(this.gameBoard)
+        gameBoardContainer.appendChild(this.gameBoard)
 
         this.createBoard(onClickCallback)
     }
@@ -33,6 +30,7 @@ export default class Board {
             const div = document.createElement('div');
             div.classList.add('boardBorder');
             div.classList.add('reference-container');
+            if (x > 0 && x < 9) div.classList.add('north');
             div.innerHTML = this.letters[x];
             this.gameBoard.appendChild(div);
         }
@@ -44,6 +42,7 @@ export default class Board {
             const firstDiv = document.createElement('div');
             firstDiv.classList.add('boardBorder');
             firstDiv.classList.add('reference-container');
+            firstDiv.classList.add('west');
             firstDiv.innerHTML = y + 1;
             this.gameBoard.appendChild(firstDiv);
 
@@ -78,6 +77,7 @@ export default class Board {
             const lastDiv = document.createElement('div');
             lastDiv.classList.add('boardBorder');
             lastDiv.classList.add('reference-container');
+            lastDiv.classList.add('east');
             lastDiv.innerHTML = y + 1;
             this.gameBoard.appendChild(lastDiv);
         }
@@ -87,6 +87,7 @@ export default class Board {
             const div = document.createElement('div');
             div.classList.add('boardBorder');
             div.classList.add('reference-container');
+            if (x > 0 && x < 9) div.classList.add('south');
             div.innerHTML = this.letters[x];
             this.gameBoard.appendChild(div);
         }

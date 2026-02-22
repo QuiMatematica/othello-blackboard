@@ -44,6 +44,28 @@ export default class Position {
         return new Position(grid, BLACK)
     }
 
+    setStone(square, color) {
+        const x = square.x;
+        const y = square.y;
+
+        // Copy the grid.
+        const nextGrid = this.copyGrid();
+
+        // Place the stone in the new grid.
+        nextGrid[y][x] = color;
+
+        // Build the next position.
+        return new Position(nextGrid, this.turn);
+    }
+
+    changeTurn(color) {
+        // Copy the grid.
+        const nextGrid = this.copyGrid();
+
+        // Build the next position.
+        return new Position(nextGrid, color);
+    }
+
     countStones() {
         const scores = { black: 0, white: 0 };
 

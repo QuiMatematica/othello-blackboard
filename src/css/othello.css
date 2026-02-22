@@ -5,6 +5,10 @@
     --square-size: 2em;
 }
 
+html {
+    font-size: clamp(12px, 5vmin, 30px);
+}
+
 /* Reset completo */
 html, body {
     margin: 0;
@@ -20,7 +24,7 @@ html, body {
 }
 
 /* Layout orizzontale (default desktop) */
-.board {
+#board {
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: lightgray;
@@ -34,9 +38,6 @@ html, body {
     flex: 1;
     background-color: lightgray;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2rem;
 }
 
 /* Layout verticale */
@@ -53,6 +54,21 @@ html, body {
     .side {
         flex: 1;
     }
+}
+
+/* Pulsante attivo verde */
+.custom-pills .nav-link {
+  color: #198754 !important;
+  transition: all 0.2s ease;
+}
+
+.custom-pills .nav-link:hover {
+  background-color: rgba(25, 135, 84, 0.1);
+}
+
+.custom-pills .nav-link.active {
+  background-color: #198754 !important;
+  color: white !important;
 }
 
 /* ===============
@@ -95,7 +111,7 @@ html, body {
 
 .square {
     /* The squares are all green with a black border. */
-    background-color: green;
+    background-color: #198754;
     border: .3vmin solid black;
 
     /* The size of the squares should include the border, or else the overall
@@ -106,21 +122,40 @@ html, body {
     line-height: 0;
 }
 
-/* Any container that holds a stone, including a square in the board. */
 .reference-container {
     width: 100%;
     height: 100%;
 
-    /* For the score board stones, we need to make sure the size of the container
-     * is properly constrained.  Otherwise, display: inline would make the SVG
-     * inside blow up and escape the width & height above. */
     display: inline-flex;
     justify-content: center;
     align-items: center;
 
-    /* The score board stones have text overlayed with absolute positioning. */
     position: relative;
     font-size: 5vmin;
+}
+
+.reference-container.north {
+    align-items: flex-end;
+    padding-bottom: 3vmin;
+    border-bottom: .3vmin solid black;
+}
+
+.reference-container.south {
+    align-items: flex-start;
+    padding-top: 3vmin;
+    border-top: .3vmin solid black;
+}
+
+.reference-container.west {
+    justify-content: flex-end;
+    padding-right: 1vmin;
+    border-right: .3vmin solid black;
+}
+
+.reference-container.east {
+    justify-content: flex-start;
+    padding-left: 1vmin;
+    border-left: .3vmin solid black;
 }
 
 .boardBorder {
@@ -259,7 +294,7 @@ svg {
 
 .cross-line {
     display: none;
-    stroke-width: 4;
+    stroke-width: 1pt;
     stroke-linecap: round;
 }
 
