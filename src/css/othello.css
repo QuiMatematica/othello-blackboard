@@ -111,7 +111,7 @@ html, body {
 
 .square {
     /* The squares are all green with a black border. */
-    background-color: green;
+    background-color: #198754;
     border: .3vmin solid black;
 
     /* The size of the squares should include the border, or else the overall

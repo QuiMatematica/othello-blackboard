@@ -54,11 +54,11 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
 
         <div class="container-fluid p-0">
 
-            <div class="d-flex justify-content-end w-100 p-2">
+            <!-- div class="d-flex justify-content-end w-100 p-2">
                 <button class="btn btn-success">Login</button>
-            </div>
+            </div -->
 
-            <ul class="nav nav-pills nav-fill mb-3 custom-pills" id="mainTabs" role="tablist">
+            <ul class="nav nav-pills nav-fill mt-5 mb-3 custom-pills" id="mainTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active"
                             id="play-tab"
@@ -81,7 +81,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                     </button>
                 </li>
 
-                <li class="nav-item" role="presentation">
+                <!-- li class="nav-item" role="presentation">
                     <button class="nav-link"
                             id="draw-tab"
                             data-bs-toggle="tab"
@@ -101,7 +101,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                             role="tab">
                         <i class="bi bi-folder"></i>
                     </button>
-                </li>
+                </li -->
             </ul>
 
             <!-- TAB CONTENT -->
