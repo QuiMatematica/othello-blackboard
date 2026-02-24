@@ -202,7 +202,10 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
         </div>
     </div>
 
-    <script src="js/othello.js"></script>
+    <?php
+    $assets = require __DIR__ . '/assets.php';
+    ?>
+    <script src="<?= $assets['main.js'] ?>"></script>
 
 </body>
 </html>
