@@ -6,7 +6,7 @@
 }
 
 html {
-    font-size: clamp(12px, 5vmin, 30px);
+    font-size: clamp(24px, 1.5vmin, 48px);
 }
 
 /* Reset completo */
@@ -39,11 +39,29 @@ html, body {
     flex-direction: column;
     background-color: lightgray;
     display: flex;
+    height: 100%;
+}
+
+#mainTabs .nav-link {
+    color: #198754;
+}
+
+#mainTabs .nav-link.active {
+    background-color: #198754;
+    color: white;
+    border-color: #198754 #198754 #198754;
 }
 
 #mode-content {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    display: flex;
+    background-color: #d8f3dc;   /* verde più chiaro che stacca */
+    border: 1px solid #198754;
+    padding: 1rem;
+    height: 100%;
+}
+
+.tab-pane {
+    flex: 1;
 }
 
 /* Layout verticale */
@@ -63,31 +81,20 @@ html, body {
     }
 
     #mainTabs {
-        flex-direction: column;   /* pulsanti verticali */
-        width: auto;
-        min-width: 120px;         /* opzionale: larghezza fissa */
+        flex-direction: column;
+        border-bottom: none;
+        border-right: 1px solid #198754;
+    }
+
+    #mainTabs .nav-link {
+        color: #198754;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: var(--bs-nav-tabs-border-radius);
     }
 
     #mode-content {
         flex: 1;
-        padding-top: 0;
-        padding-bottom: 0;
     }
-}
-
-/* Pulsante attivo verde */
-.custom-pills .nav-link {
-  color: #198754 !important;
-  transition: all 0.2s ease;
-}
-
-.custom-pills .nav-link:hover {
-  background-color: rgba(25, 135, 84, 0.1);
-}
-
-.custom-pills .nav-link.active {
-  background-color: #198754 !important;
-  color: white !important;
 }
 
 /* ===============
