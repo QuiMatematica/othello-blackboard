@@ -34,10 +34,16 @@ html, body {
     color: black;
 }
 
-.side {
+#side {
     flex: 1;
+    flex-direction: column;
     background-color: lightgray;
     display: flex;
+}
+
+#mode-content {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
 }
 
 /* Layout verticale */
@@ -51,8 +57,21 @@ html, body {
         height: auto;
     }
 
-    .side {
+    #side {
         flex: 1;
+        flex-direction: row;
+    }
+
+    #mainTabs {
+        flex-direction: column;   /* pulsanti verticali */
+        width: auto;
+        min-width: 120px;         /* opzionale: larghezza fissa */
+    }
+
+    #mode-content {
+        flex: 1;
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }
 

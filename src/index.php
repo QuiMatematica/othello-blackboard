@@ -50,15 +50,13 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
 <div class="wrapper">
     <div id="board"></div>
 
-    <div class="side">
-
-        <div class="container-fluid p-0">
+    <div id="side" class="p-1">
 
             <!-- div class="d-flex justify-content-end w-100 p-2">
                 <button class="btn btn-success">Login</button>
             </div -->
 
-            <ul class="nav nav-pills nav-fill mt-5 mb-3 custom-pills" id="mainTabs" role="tablist">
+            <ul class="nav nav-pills m-0 justify-content-center custom-pills" id="mainTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link active"
                             id="play-tab"
@@ -105,10 +103,10 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
             </ul>
 
             <!-- TAB CONTENT -->
-            <div class="tab-content">
+            <div id="mode-content" class="tab-content">
 
-                <div class="tab-pane fade show active" id="play" role="tabpanel">
-                    <div class="d-flex justify-content-center flex-nowrap gap-2 mt-5">
+                <div class="tab-pane fade show active p-1" id="play" role="tabpanel">
+                    <div class="d-flex justify-content-center flex-nowrap gap-2">
                         <div id="black-score" class="text-center px-2">2</div>
                         <div class="text-center px-2"><i class="bi bi-circle-fill"></i></div>
                         <div class="text-center px-2"><i id="turn" class="bi bi-caret-left-fill"></i></div>
@@ -130,7 +128,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
                 </div>
 
                 <div class="tab-pane fade" id="set" role="tabpanel">
-                    <div class="row mt-5">
+                    <div class="row">
                         <div class="col d-flex justify-content-center">
                             <div class="btn-group" role="group" aria-label="Toggle group">
 
@@ -199,7 +197,6 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
 
                 </div>
             </div>
-        </div>
     </div>
 
     <?php
