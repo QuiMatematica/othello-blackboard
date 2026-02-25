@@ -6,6 +6,7 @@ $isLocalhost = str_contains($host, 'localhost');
 $isTest = str_contains($host, 'test');
 $isProd = !$isTest && !$isLocalhost;
 $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
+$assets = require __DIR__ . '/assets.php';
 ?>
 
 <html lang="it">
@@ -37,7 +38,7 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
     <meta name="author" content="Claudio Signorini">
 
     <title>Othello blackboard</title>
-    <link href="<?= $root ?>css/othello.css" rel="stylesheet">
+    <link href="<?= $assets['main.css'] ?>" rel="stylesheet">
 
     <!-- PWA -->
     <link rel="manifest" href="<?= $root ?>manifest.json">
@@ -199,9 +200,6 @@ $root = $isLocalhost ? '/othello-blackboard/dist/' : '/';
     </div>
 </div>
 
-<?php
-$assets = require __DIR__ . '/assets.php';
-?>
 <script src="<?= $assets['main.js'] ?>"></script>
 
 </body>
