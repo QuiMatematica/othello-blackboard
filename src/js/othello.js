@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function isPWA() {
         return window.matchMedia('(display-mode: standalone)').matches
-            || window.matchMedia('(display-mode: fullscreen)').matches
             || window.navigator.standalone === true;
     }
 
@@ -22,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateButtonVisibility() {
-        if (!isPWA() && !isFullscreen()) {
+        if (!isFullscreen()) {
             btn.classList.remove("d-none");
         } else {
             btn.classList.add("d-none");
