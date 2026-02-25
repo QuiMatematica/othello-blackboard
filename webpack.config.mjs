@@ -1,5 +1,6 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
 
@@ -21,19 +22,21 @@ export default {
         rules: [
             {
                 test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
+                use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
         ],
     },
 
     plugins: [
+        new MiniCssExtractPlugin({
+            filename: 'css/othello.[contenthash].css'
+        }),
         new CopyPlugin({
             patterns: [
                 {from: 'src/index.php', to: 'index.php'},
                 {from: 'src/manifest.json', to: 'manifest.json'},
                 {from: 'src/offline.html', to: 'offline.html'},
                 {from: 'src/service-worker.js', to: 'service-worker.js'},
-                {from: 'src/css', to: 'css/.'},
                 {from: 'src/icons', to: 'icons/.'},
                 {from: 'src/images', to: 'images/.'}
             ]
@@ -47,6 +50,9 @@ export default {
                 const manifest = files.reduce((acc, file) => {
                     // prendiamo solo i bundle iniziali JS
                     if (file.isInitial && file.path.endsWith('.js')) {
+                        acc[file.name] = file.path;
+                    }
+                    if (file.isInitial && file.path.endsWith('.css')) {
                         acc[file.name] = file.path;
                     }
                     return acc;
