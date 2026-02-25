@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateButtonVisibility() {
-        if (!isPWA() && !isFullscreen()) {
+        if (!isFullscreen()) {
             btn.classList.remove("d-none");
         } else {
             btn.classList.add("d-none");
