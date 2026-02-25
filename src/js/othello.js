@@ -1,6 +1,7 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import '../css/othello.css';
 import Blackboard from "./blackboard";
 
 new Blackboard();
