@@ -58,7 +58,7 @@ html, body {
 
 #mode-content {
     display: flex;
-    background-color: #d8f3dc;   /* verde più chiaro che stacca */
+    background-color: #adb5bd;   /* grigio azzurro */
     border: 1px solid #198754;
     padding: 1rem;
 }
