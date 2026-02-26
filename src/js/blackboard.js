@@ -212,15 +212,18 @@ class PlayMode {
 
     updateTurn() {
         this.turnElement.classList.remove('bi-caret-left-fill');
-        this.turnElement.classList.remove('bi-caret-right');
+        this.turnElement.classList.remove('bi-caret-right-fill');
         this.turnElement.classList.remove('bi-sign-stop');
         const position = this.board.currentPosition;
         if (position.gameOver) {
             this.turnElement.classList.add('bi-sign-stop');
+            this.turnElement.style.color = 'black';
         } else if (position.turn === WHITE) {
-            this.turnElement.classList.add('bi-caret-right');
+            this.turnElement.classList.add('bi-caret-right-fill');
+            this.turnElement.style.color = 'white';
         } else {
             this.turnElement.classList.add('bi-caret-left-fill');
+            this.turnElement.style.color = 'black';
         }
 
     }

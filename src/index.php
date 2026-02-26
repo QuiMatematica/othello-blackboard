@@ -109,9 +109,9 @@ $assets = require __DIR__ . '/assets.php';
             <div class="tab-pane fade show active p-1" id="play" role="tabpanel">
                 <div class="d-flex justify-content-center flex-nowrap gap-2 my-2">
                     <div id="black-score" class="text-center px-2">2</div>
-                    <div class="text-center px-2"><i class="bi bi-circle-fill"></i></div>
-                    <div class="text-center px-2"><i id="turn" class="bi bi-caret-left-fill"></i></div>
-                    <div class="text-center px-2"><i class="bi bi-circle"></i></div>
+                    <div class="text-center px-2"><i style="color: black;" class="bi bi-circle-fill"></i></div>
+                    <div class="text-center px-2"><i id="turn" style="color: black;" class="bi bi-caret-left-fill"></i></div>
+                    <div class="text-center px-2"><i style="color: white;" class="bi bi-circle-fill"></i></div>
                     <div id="white-score" class="text-center px-2">2</div>
                 </div>
                 <div class="text-center my-2">
