@@ -200,14 +200,6 @@ $assets = require __DIR__ . '/assets.php';
     </div>
 </div>
 
-<button
-        id="btnFullscreen"
-        class="btn btn-success shadow position-fixed bottom-0 end-0 m-3 d-none"
-        style="z-index: 1080;"
-        aria-label="Attiva fullscreen">
-    <i class="bi bi-arrows-fullscreen"></i>
-</button>
-
 <script src="<?= $assets['main.js'] ?>"></script>
 
 </body>
