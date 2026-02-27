@@ -3,8 +3,6 @@ import Board from "./board";
 import Square from "./square";
 import {isAnimatingFlip} from "./page";
 
-let theBoard;
-
 export default class Blackboard {
 
     currentPosition;
@@ -13,21 +11,22 @@ export default class Blackboard {
     currentMode;
     board;
 
-    constructor() {
-        theBoard = this;
+    isDragging = false;
+    lastCell = null;
 
+    constructor() {
         this.currentPosition = Position.getStartingPosition();
 
-        this.board = new Board((event) => {
-            if (isAnimatingFlip()) {
-                return;
-            }
-
-            const div = event.currentTarget;
-            const {x, y} = div.dataset;  // NOTE: strings, not ints
-            this.currentMode.onClick(x, y);
-        });
+        this.board = new Board();
         this.board.setPosition(this.currentPosition);
+
+        const cells = this.board.gameBoard.querySelectorAll('.stone-container');
+        cells.forEach(cell => {
+            cell.addEventListener('click', this.onClick.bind(this));
+            cell.addEventListener('pointerdown', this.onPointerDown.bind(this));
+            cell.addEventListener('pointermove', this.onPointerMove.bind(this));
+        })
+        document.addEventListener('pointerup', this.onPointerUp.bind(this));
 
         this.playMode = new PlayMode(this);
         this.playMode.update();
@@ -44,6 +43,43 @@ export default class Blackboard {
             this.currentMode = this.editMode;
             console.log("Edit mode");
         })
+    }
+
+    onClick(e) {
+        if (isAnimatingFlip()) {
+            return;
+        }
+
+        const div = e.currentTarget;
+        const {x, y} = div.dataset;  // NOTE: strings, not ints
+        this.currentMode.onClick(x, y);
+    }
+
+    onPointerDown(e) {
+        this.isDragging = true;
+        const cell = e.currentTarget;
+        this.lastCell = cell;
+        const {x, y} = cell.dataset;
+        this.currentMode.onPointerDown(x, y);
+    }
+
+    onPointerMove(e) {
+        if (!this.isDragging) return;
+
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        const cell = el?.closest('.stone-container');
+
+        if (cell === this.lastCell) return;
+        this.lastCell = cell;
+
+        const {x, y} = cell.dataset;
+        this.currentMode.onPointerMove(x, y);
+    }
+
+    onPointerUp() {
+        this.isDragging = false;
+        this.lastCell = null;
+        this.currentMode.onPointerUp();
     }
 
     update(nextPosition) {
@@ -83,13 +119,13 @@ class EditMode {
             }
         });
 
-        document.getElementById('black-turn').addEventListener('change', (e) => {
+        document.getElementById('black-turn').addEventListener('change', () => {
             let position = this.board.currentPosition;
             position = position.changeTurn(BLACK);
             this.board.update(position);
             this.board.playMode.update();
         });
-        document.getElementById('white-turn').addEventListener('change', (e) => {
+        document.getElementById('white-turn').addEventListener('change', () => {
             let position = this.board.currentPosition;
             position = position.changeTurn(WHITE);
             this.board.update(position);
@@ -118,6 +154,18 @@ class EditMode {
         position = position.setStone(square, this.currentColor);
         this.board.update(position);
         this.board.playMode.update();
+        this.update();
+    }
+
+    onPointerDown(x, y) {
+        this.onClick(x, y);
+    }
+
+    onPointerMove(x, y) {
+        this.onClick(x, y);
+    }
+
+    onPointerUp() {
     }
 
     update() {
@@ -197,6 +245,15 @@ class PlayMode {
         }
     }
 
+    onPointerDown(x, y) {
+    }
+
+    onPointerMove(x, y) {
+    }
+
+    onPointerUp() {
+    }
+
     update() {
         this.updateScore();
         this.updateTurn();
@@ -235,10 +292,6 @@ class PlayMode {
         this.next.disabled = (position.nextPosition == null);
         this.last.disabled = (position.nextPosition == null);
     }
-
-}
-
-class SetMode {
 
 }
 

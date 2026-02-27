@@ -32,6 +32,7 @@ html, body {
     align-items: center;
     justify-content: center;
     color: black;
+    touch-action: none;
 }
 
 #side {
@@ -109,6 +110,8 @@ html, body {
     width: 100%;
     height: 100%;
     display: flex;
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
 }
 
 .gameBoard {
@@ -250,6 +253,7 @@ svg {
     fill: none;
     stroke: none;
     stroke-width: 1px; /* In SVG coordinates, not pages coordinates. */
+    pointer-events: none;
 }
 
 .black .stone {
