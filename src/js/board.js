@@ -12,7 +12,9 @@ export default class Board {
 
     arrows = 0;
 
-    constructor(onClickCallback) {
+    isDragging = false;
+
+    constructor() {
         const gameBoardContainer = document.createElement('div');
         gameBoardContainer.classList.add('game-board-container')
         document.getElementById('board').appendChild(gameBoardContainer)
@@ -21,10 +23,10 @@ export default class Board {
         this.gameBoard.classList.add('gameBoard');
         gameBoardContainer.appendChild(this.gameBoard)
 
-        this.createBoard(onClickCallback)
+        this.createBoard()
     }
 
-    createBoard(onClickCallback) {
+    createBoard() {
         // Prima riga: riferimenti
         for (let x = 0; x < 10; ++x) {
             const div = document.createElement('div');
@@ -55,9 +57,6 @@ export default class Board {
                 // Store the grid coordinates on the element.
                 div.dataset.x = x;
                 div.dataset.y = y;
-
-                // When the square is clicked, invoke this callback.
-                div.addEventListener('click', onClickCallback);
 
                 // When the flip animation ends, update the flip state and mark the valid
                 // moves for the next player.

@@ -32,6 +32,7 @@ html, body {
     align-items: center;
     justify-content: center;
     color: black;
+    touch-action: none;
 }
 
 #side {
@@ -250,6 +251,7 @@ svg {
     fill: none;
     stroke: none;
     stroke-width: 1px; /* In SVG coordinates, not pages coordinates. */
+    pointer-events: none;
 }
 
 .black .stone {
