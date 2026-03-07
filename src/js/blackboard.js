@@ -185,12 +185,16 @@ class PlayMode {
     prev;
     last;
     moveHistory;
+    variationSwitchContainer;
+    variationSwitch;
 
     constructor(board) {
         this.board = board;
         this.scoreElements.black = document.getElementById('black-score');
         this.scoreElements.white = document.getElementById('white-score');
         this.turnElement = document.getElementById('turn');
+        this.variationSwitchContainer = document.getElementById('variation-switch-container');
+        this.variationSwitch = document.getElementById('variation-switch');
         this.moveHistory = new MoveHistory((e) => {
             const target = e.currentTarget;
             const number = Number(target.dataset.number);
@@ -276,6 +280,7 @@ class PlayMode {
             this.moveHistory.play(nextPosition);
             this.update();
             this.board.editMode.update();
+            this.variationSwitchContainer.classList.remove('d-none');
         }
     }
 

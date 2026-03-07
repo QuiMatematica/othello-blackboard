@@ -427,3 +427,13 @@ svg {
 .empty {
     visibility: hidden;
 }
+
+.form-switch .form-check-input:checked {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success);
+}
+
+.form-switch .form-check-input:focus {
+    border-color: var(--bs-success);
+    box-shadow: 0 0 0 .25rem rgba(25,135,84,.25);
+}

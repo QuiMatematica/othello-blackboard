@@ -130,6 +130,12 @@ $assets = require __DIR__ . '/assets.php';
                 <div id="move-history">
                     <div class="move-row main" data-line="0"></div>
                 </div>
+                <div id="variation-switch-container" class="text-center my-2 d-none">
+                    <div class="form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="variation-switch">
+                        <label class="form-check-label" for="variation-switch"><i class="bi bi-diagram-2-fill"></i></label>
+                    </div>
+                </div>
             </div>
 
             <div class="tab-pane fade" id="set" role="tabpanel">
