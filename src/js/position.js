@@ -15,6 +15,7 @@ export default class Position {
     passCount;
     nextPosition;
     prevPosition;
+    moveNumber;
 
     errors;
 
@@ -26,6 +27,7 @@ export default class Position {
         this.checkValidMoves();
         this.comment = null;
         this.errors = [];
+        this.moveNumber = 0;
     }
 
     static getEmptyPosition() {
@@ -180,6 +182,7 @@ export default class Position {
         let next = new Position(nextGrid, nextTurn);
         // Save the played position
         next.played = new Square(x, y);
+        next.moveNumber = this.moveNumber + 1;
         // Save the flipped stones
         next.flipped = flipped;
         // Link the next position to this one.

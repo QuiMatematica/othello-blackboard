@@ -2,6 +2,7 @@ import Position, {BLACK, EMPTY, WHITE} from "./position";
 import Board from "./board";
 import Square from "./square";
 import {isAnimatingFlip} from "./page";
+import MoveHistory from "./move-history";
 
 export default class Blackboard {
 
@@ -183,12 +184,36 @@ class PlayMode {
     next;
     prev;
     last;
+    moveHistory;
 
     constructor(board) {
         this.board = board;
         this.scoreElements.black = document.getElementById('black-score');
         this.scoreElements.white = document.getElementById('white-score');
         this.turnElement = document.getElementById('turn');
+        this.moveHistory = new MoveHistory((e) => {
+            const target = e.currentTarget;
+            const number = Number(target.dataset.number);
+            let currentPosition = this.board.currentPosition;
+            if (number === currentPosition.moveNumber) {
+                return;
+            }
+            if (number === currentPosition.moveNumber + 1) {
+                this.board.play(currentPosition.nextPosition);
+            }
+            else {
+                while (currentPosition.moveNumber !== number) {
+                    if (number < currentPosition.moveNumber) {
+                        currentPosition = currentPosition.prevPosition;
+                    } else {
+                        currentPosition = currentPosition.nextPosition;
+                    }
+                }
+                this.board.update(currentPosition);
+            }
+            this.update();
+            this.updateHistory();
+        });
 
         this.first = document.getElementById('first');
         this.first.addEventListener('click', () => {
@@ -240,6 +265,7 @@ class PlayMode {
         // If the play was valid, update the views.
         if (nextPosition != null) {
             this.board.play(nextPosition);
+            this.moveHistory.play(nextPosition);
             this.update();
             this.board.editMode.update();
         }
@@ -291,6 +317,11 @@ class PlayMode {
         this.prev.disabled = (position.prevPosition == null);
         this.next.disabled = (position.nextPosition == null);
         this.last.disabled = (position.nextPosition == null);
+    }
+
+    updateHistory() {
+        const position = this.board.currentPosition;
+        this.moveHistory.updateCurrent(position.moveNumber);
     }
 
 }

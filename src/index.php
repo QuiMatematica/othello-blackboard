@@ -110,7 +110,8 @@ $assets = require __DIR__ . '/assets.php';
                 <div class="d-flex justify-content-center flex-nowrap gap-2 my-2">
                     <div id="black-score" class="text-center px-1" style="min-width:3ch">2</div>
                     <div class="text-center"><i style="color: black;" class="bi bi-circle-fill"></i></div>
-                    <div class="text-center px-2"><i id="turn" style="color: black;" class="bi bi-caret-left-fill"></i></div>
+                    <div class="text-center px-2"><i id="turn" style="color: black;" class="bi bi-caret-left-fill"></i>
+                    </div>
                     <div class="text-center"><i style="color: white;" class="bi bi-circle-fill"></i></div>
                     <div id="white-score" class="text-center px-1" style="min-width:3ch">2</div>
                 </div>
@@ -125,6 +126,9 @@ $assets = require __DIR__ . '/assets.php';
                         <button id="last" class="btn btn-success bi bi-chevron-bar-right" data-counter="0"
                                 disabled=""></button>
                     </div>
+                </div>
+                <div id="move-history">
+                    <div class="move-row main" data-line="0"></div>
                 </div>
             </div>
 

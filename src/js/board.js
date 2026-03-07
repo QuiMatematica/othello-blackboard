@@ -12,8 +12,6 @@ export default class Board {
 
     arrows = 0;
 
-    isDragging = false;
-
     constructor() {
         const gameBoardContainer = document.createElement('div');
         gameBoardContainer.classList.add('game-board-container')
