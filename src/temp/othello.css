@@ -1,0 +1,117 @@
+:root {
+    /* The size of the squares in the Othello board.  Many other things are
+     * computed relative to this size, which will change in certain screen
+     * layouts and sizes. */
+    --square-size: 2em;
+}
+
+html {
+    font-size: clamp(24px, 1.5vmin, 48px);
+}
+
+/* Reset completo */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* NIENTE SCROLL */
+}
+
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+}
+
+/* Layout orizzontale (default desktop) */
+#board {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: lightgray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    touch-action: none;
+}
+
+#side {
+    flex: 1;
+    flex-direction: column;
+    background-color: lightgray;
+    display: flex;
+    height: 100%;
+    min-width: 0;
+}
+
+#mainTabs {
+    margin-top: 5vmin;
+}
+
+#mainTabs .nav-link {
+    color: #198754;
+}
+
+#mainTabs .nav-link.active {
+    background-color: #198754;
+    color: white;
+    border-color: #198754 #198754 #198754;
+}
+
+#mode-content {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+    background-color: #adb5bd; /* grigio azzurro */
+    border: 1px solid #198754;
+    padding: 1rem;
+    /*min-width: 0; !* per lo scroll di move-history *!*/
+}
+
+.tab-pane {
+    flex: 1;
+    min-width: 0; /* per lo scroll di move-history */
+    min-height: 0;
+}
+
+/* ==================
+   Move history
+   ================== */
+
+#move-history {
+    /*min-width: 0;*/
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+}
+
+.move-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 5ch;
+    gap: 4px;
+    padding: 3px 0;
+    width: max-content;
+}
+
+.move {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #bbb;
+    border-radius: 6px;
+
+    background: white;
+    cursor: pointer;
+}
+
+.main .move {
+    background: #e8f5e9;
+}
+
+.empty {
+    visibility: hidden;
+}

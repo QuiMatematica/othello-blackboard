@@ -1,0 +1,49 @@
+<html lang="it"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Othello blackboard</title>
+    <link href="othello.css" rel="stylesheet">
+    <link href="../../node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="wrapper">
+    <div id="board"></div>
+
+    <div id="side" class="p-1">
+
+        <ul class="nav nav-tabs flex-nowrap" id="mainTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="play-tab" data-bs-toggle="tab" data-bs-target="#play" type="button" role="tab" aria-selected="true">
+                    <i class="bi bi-play-btn"></i>
+                </button>
+            </li>
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="set-tab" data-bs-toggle="tab" data-bs-target="#set" type="button" role="tab" aria-selected="false" tabindex="-1">
+                    <i class="bi bi-circle-half"></i>
+                </button>
+            </li>
+
+        </ul>
+
+        <div id="mode-content" class="tab-content">
+
+            <div class="tab-pane fade show active p-1" id="play" role="tabpanel" aria-labelledby="play-tab">
+                <div id="move-history" class="overflow-x-auto">
+                    <div class="move-row main" data-line="0"><div class="move">1 F5</div><div class="move">2 F6</div><div class="move">3 E6</div><div class="move">4 D6</div><div class="move">5 C5</div></div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="set" role="tabpanel" aria-labelledby="set-tab">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

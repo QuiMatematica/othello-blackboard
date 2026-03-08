@@ -41,6 +41,8 @@ html, body {
     background-color: lightgray;
     display: flex;
     height: 100%;
+    min-width: 0;
+    min-height: 0;
 }
 
 #mainTabs {
@@ -59,13 +61,18 @@ html, body {
 
 #mode-content {
     display: flex;
-    background-color: #adb5bd;   /* grigio azzurro */
+    flex: 1;
+    background-color: #adb5bd; /* grigio azzurro */
     border: 1px solid #198754;
     padding: 1rem;
+    min-width: 0;
+    min-height: 0;
 }
 
 .tab-pane {
     flex: 1;
+    min-width: 0; /* per lo scroll di move-history */
+    min-height: 0;
 }
 
 /* Layout verticale */
@@ -343,4 +350,90 @@ svg {
 
 .last.black .cross-line {
     stroke: white;
+}
+
+/* ==================
+   Move history
+   ================== */
+
+#move-history {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    /* scrolling fluido su iOS */
+    -webkit-overflow-scrolling: touch;
+
+    /* nasconde scrollbar Firefox */
+    scrollbar-width: none;
+    touch-action: pan-x;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+/* nasconde scrollbar Chrome / Edge / Safari */
+#move-history::-webkit-scrollbar {
+    display: none;
+}
+
+#move-history {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10px,
+        black calc(100% - 10px),
+        transparent
+    );
+}
+
+.move-row {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 6ch;
+    gap: 4px;
+    padding: 3px 0;
+    width: max-content;
+}
+
+.move {
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0 solid #bbb;
+    border-radius: 6px;
+
+    background: #198754;
+    cursor: pointer;
+}
+
+.move.white{
+    color: white;
+    border-color: white;
+}
+.move.black{
+    color: black;
+    border-color: black;
+}
+.move.current {
+    border-width: 2px;
+}
+
+.main .move {
+    background: #198754;
+}
+
+.empty {
+    visibility: hidden;
+}
+
+.form-switch .form-check-input:checked {
+    background-color: var(--bs-success);
+    border-color: var(--bs-success);
+}
+
+.form-switch .form-check-input:focus {
+    border-color: var(--bs-success);
+    box-shadow: 0 0 0 .25rem rgba(25,135,84,.25);
 }
