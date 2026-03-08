@@ -17,9 +17,6 @@ export default class Position {
     prevPosition;
     moveNumber;
 
-    variationLine;
-    isOnVariationLine = false;
-
     constructor(grid, turn) {
         this.grid = grid;
         this.turn = turn;
@@ -140,7 +137,7 @@ export default class Position {
         this.checkValidMoves();
     }
 
-    playStone(square, mainLine) {
+    playStone(square) {
         const x = square.x;
         const y = square.y;
         // Don't play if game is over.
@@ -187,17 +184,7 @@ export default class Position {
         next.flipped = flipped;
         // Link the next position to this one.
         next.prevPosition = this;
-
-        if (mainLine) {
-            // Link this position to the next
-            this.nextPosition = next;
-            next.isOnVariationLine = this.isOnVariationLine;
-        }
-        else {
-            // Add this position as a variation line
-            this.variationLine = next;
-            next.isOnVariationLine = true;
-        }
+        this.nextPosition = next;
 
         return next;
     }

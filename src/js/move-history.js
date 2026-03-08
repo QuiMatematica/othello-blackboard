@@ -10,8 +10,12 @@ export default class MoveHistory {
         this.event = event;
     }
 
+    reset() {
+        this.removeMoves(0, 1);
+    }
+
     play(position) {
-        const lineIndex = position.isOnVariationLine ? 1 : 0;
+        const lineIndex = 0; // linea principale, per ora l'unica
         const number = position.moveNumber;
         this.removeMoves(lineIndex, number);
 

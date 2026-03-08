@@ -125,18 +125,21 @@ class EditMode {
             position = position.changeTurn(BLACK);
             this.board.update(position);
             this.board.playMode.update();
+            this.board.playMode.moveHistory.reset();
         });
         document.getElementById('white-turn').addEventListener('change', () => {
             let position = this.board.currentPosition;
             position = position.changeTurn(WHITE);
             this.board.update(position);
             this.board.playMode.update();
+            this.board.playMode.moveHistory.reset();
         });
 
         document.getElementById('reset-position').addEventListener('click', () => {
             const position = Position.getStartingPosition();
             this.board.update(position);
             this.board.playMode.update();
+            this.board.playMode.moveHistory.reset();
             this.update();
         });
 
@@ -144,6 +147,7 @@ class EditMode {
             const position = Position.getEmptyPosition();
             this.board.update(position);
             this.board.playMode.update();
+            this.board.playMode.moveHistory.reset();
             this.update();
         });
 
@@ -155,6 +159,7 @@ class EditMode {
         position = position.setStone(square, this.currentColor);
         this.board.update(position);
         this.board.playMode.update();
+        this.board.playMode.moveHistory.reset();
         this.update();
     }
 
@@ -185,16 +190,12 @@ class PlayMode {
     prev;
     last;
     moveHistory;
-    variationSwitchContainer;
-    variationSwitch;
 
     constructor(board) {
         this.board = board;
         this.scoreElements.black = document.getElementById('black-score');
         this.scoreElements.white = document.getElementById('white-score');
         this.turnElement = document.getElementById('turn');
-        this.variationSwitchContainer = document.getElementById('variation-switch-container');
-        this.variationSwitch = document.getElementById('variation-switch');
         this.moveHistory = new MoveHistory((e) => {
             const target = e.currentTarget;
             const number = Number(target.dataset.number);
@@ -270,17 +271,14 @@ class PlayMode {
     onClick(x, y) {
         const current = this.board.currentPosition;
 
-        const openVariationLine = !current.variationLine && current.nextPosition != null && this.variationSwitch.checked;
-
         const square = new Square(parseInt(x), parseInt(y));
-        const nextPosition = current.playStone(square, !openVariationLine);
+        const nextPosition = current.playStone(square);
         // If the play was valid, update the views.
         if (nextPosition != null) {
             this.board.play(nextPosition);
             this.moveHistory.play(nextPosition);
             this.update();
             this.board.editMode.update();
-            this.variationSwitchContainer.classList.remove('d-none');
         }
     }
 
