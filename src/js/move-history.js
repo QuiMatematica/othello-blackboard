@@ -59,10 +59,14 @@ export default class MoveHistory {
         const cell = document.querySelector(`.move[data-number="${number}"]`);
         if (cell == null) {
             this.history.scrollLeft = 0;
-        }
-        else {
+        } else {
             cell.classList.add('current');
-            this.history.scrollLeft = cell.offsetLeft - this.history.clientWidth / 2 + cell.clientWidth / 2;
+            // this.history.scrollLeft = cell.offsetLeft - this.history.clientWidth / 2 + cell.clientWidth / 2;
+            cell.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "center"
+            });
         }
     }
 
