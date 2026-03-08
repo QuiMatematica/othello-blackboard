@@ -231,7 +231,6 @@ class PlayMode {
                 this.board.update(curPosition);
                 this.update();
                 this.updateHistory();
-                this.moveHistory.updateScrollView();
             }
         })
         this.prev = document.getElementById('prev');
@@ -241,7 +240,6 @@ class PlayMode {
                 this.board.update(prevPosition);
                 this.update();
                 this.updateHistory();
-                this.moveHistory.updateScrollView();
             }
         })
         this.next = document.getElementById('next');
@@ -251,7 +249,6 @@ class PlayMode {
                 this.board.play(nextPosition);
                 this.update();
                 this.updateHistory();
-                this.moveHistory.updateScrollView();
             }
         })
         this.last = document.getElementById('last');
@@ -266,7 +263,6 @@ class PlayMode {
                 this.board.update(curPosition);
                 this.update();
                 this.updateHistory();
-                this.moveHistory.updateScrollView();
             }
         })
     }

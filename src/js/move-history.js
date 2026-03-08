@@ -57,15 +57,11 @@ export default class MoveHistory {
             div.classList.remove('current');
         }
         const cell = document.querySelector(`.move[data-number="${number}"]`);
-        if (cell != null) cell.classList.add('current');
-    }
-
-    updateScrollView() {
-        const cell = document.querySelector('.move.current');
         if (cell == null) {
             this.history.scrollLeft = 0;
         }
         else {
+            cell.classList.add('current');
             this.history.scrollLeft = cell.offsetLeft - this.history.clientWidth / 2 + cell.clientWidth / 2;
         }
     }
