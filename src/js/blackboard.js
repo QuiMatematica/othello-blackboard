@@ -268,13 +268,16 @@ class PlayMode {
     }
 
     onClick(x, y) {
-        const mainLine = !this.variationSwitch.checked;
+        const current = this.board.currentPosition;
+
+        const openVariationLine = !current.variationLine && current.nextPosition != null && this.variationSwitch.checked;
+
         const square = new Square(parseInt(x), parseInt(y));
-        const nextPosition = this.board.currentPosition.playStone(square, mainLine);
+        const nextPosition = current.playStone(square, !openVariationLine);
         // If the play was valid, update the views.
         if (nextPosition != null) {
             this.board.play(nextPosition);
-            this.moveHistory.play(nextPosition, mainLine);
+            this.moveHistory.play(nextPosition);
             this.update();
             this.board.editMode.update();
             this.variationSwitchContainer.classList.remove('d-none');

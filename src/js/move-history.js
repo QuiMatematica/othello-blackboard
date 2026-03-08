@@ -10,8 +10,8 @@ export default class MoveHistory {
         this.event = event;
     }
 
-    play(position, mainLine) {
-        const lineIndex = mainLine ? 0 : 1; // per ora mettiamoli tutti sulla principale
+    play(position) {
+        const lineIndex = position.isOnVariationLine ? 1 : 0;
         const number = position.moveNumber;
         this.removeMoves(lineIndex, number);
 
@@ -61,7 +61,6 @@ export default class MoveHistory {
             this.history.scrollLeft = 0;
         } else {
             cell.classList.add('current');
-            // this.history.scrollLeft = cell.offsetLeft - this.history.clientWidth / 2 + cell.clientWidth / 2;
             cell.scrollIntoView({
                 behavior: "smooth",
                 block: "center",

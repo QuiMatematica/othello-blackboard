@@ -18,6 +18,7 @@ export default class Position {
     moveNumber;
 
     variationLine;
+    isOnVariationLine = false;
 
     constructor(grid, turn) {
         this.grid = grid;
@@ -190,10 +191,12 @@ export default class Position {
         if (mainLine) {
             // Link this position to the next
             this.nextPosition = next;
+            next.isOnVariationLine = this.isOnVariationLine;
         }
         else {
-            // Add this position as error
+            // Add this position as a variation line
             this.variationLine = next;
+            next.isOnVariationLine = true;
         }
 
         return next;
