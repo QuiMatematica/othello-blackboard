@@ -17,7 +17,7 @@ export default class Position {
     prevPosition;
     moveNumber;
 
-    errors;
+    variationLine;
 
     constructor(grid, turn) {
         this.grid = grid;
@@ -26,7 +26,6 @@ export default class Position {
         this.passCount = 0;
         this.checkValidMoves();
         this.comment = null;
-        this.errors = [];
         this.moveNumber = 0;
     }
 
@@ -140,7 +139,7 @@ export default class Position {
         this.checkValidMoves();
     }
 
-    playStone(square, isError) {
+    playStone(square, mainLine) {
         const x = square.x;
         const y = square.y;
         // Don't play if game is over.
@@ -188,13 +187,13 @@ export default class Position {
         // Link the next position to this one.
         next.prevPosition = this;
 
-        if (isError) {
-            // Add this position as error
-            this.errors.push(next);
-        }
-        else {
+        if (mainLine) {
             // Link this position to the next
             this.nextPosition = next;
+        }
+        else {
+            // Add this position as error
+            this.variationLine = next;
         }
 
         return next;

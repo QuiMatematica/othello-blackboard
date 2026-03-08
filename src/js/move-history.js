@@ -10,12 +10,21 @@ export default class MoveHistory {
         this.event = event;
     }
 
-    play(position) {
-        const lineIndex = 0; // per ora mettiamoli tutti sulla principale
+    play(position, mainLine) {
+        const lineIndex = mainLine ? 0 : 1; // per ora mettiamoli tutti sulla principale
         const number = position.moveNumber;
+        this.removeMoves(lineIndex, number);
+
         const text = number + '. ' + position.played;
         const color = position.prevPosition.turn === BLACK ? 'black' : 'white';
         this.addMove(lineIndex, number, text, color);
+    }
+
+    removeMoves(lineIndex, number) {
+        const row = document.querySelector(`.move-row[data-line="${lineIndex}"]`);
+        while (row.children.length > number - 1) {
+            row.children[number - 1].remove();
+        }
     }
 
     addMove(lineIndex, number, text, color) {
