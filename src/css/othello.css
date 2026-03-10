@@ -20,11 +20,12 @@ html, body {
 body {
     min-height: 100dvh;
     display: flex;
+    background-color: lightgray;
 }
 
 /* Layout orizzontale (default desktop) */
 #board {
-    height: 100%;
+    height: min(100%, 70vw);
     aspect-ratio: 1 / 1;
     background-color: lightgray;
     display: flex;
@@ -81,7 +82,7 @@ body {
     }
 
     #board {
-        width: 100%;
+        width: min(100%, 70vh);
         height: auto;
     }
 
