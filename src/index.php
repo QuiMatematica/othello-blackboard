@@ -48,7 +48,6 @@ $assets = require __DIR__ . '/assets.php';
 
 <body>
 
-<div class="wrapper">
     <div id="board"></div>
 
     <div id="side" class="p-1">
@@ -202,7 +201,6 @@ $assets = require __DIR__ . '/assets.php';
 
         </div>
     </div>
-</div>
 
 <script src="<?= $assets['main.js'] ?>"></script>
 

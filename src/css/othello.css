@@ -17,9 +17,8 @@ html, body {
     overflow: hidden; /* NIENTE SCROLL */
 }
 
-.wrapper {
-    width: 100vw;
-    height: 100vh;
+body {
+    min-height: 100dvh;
     display: flex;
 }
 
@@ -77,7 +76,7 @@ html, body {
 
 /* Layout verticale */
 @media (orientation: portrait) {
-    .wrapper {
+    body {
         flex-direction: column;
     }
 
@@ -152,7 +151,7 @@ html, body {
 .square {
     /* The squares are all green with a black border. */
     background-color: #198754;
-    border: .3vmin solid black;
+    border: 1px solid black;
 
     /* The size of the squares should include the border, or else the overall
      * board might be too big. */
@@ -177,25 +176,25 @@ html, body {
 .reference-container.north {
     align-items: flex-end;
     padding-bottom: 3vmin;
-    border-bottom: .3vmin solid black;
+    border-bottom: 1px solid black;
 }
 
 .reference-container.south {
     align-items: flex-start;
     padding-top: 3vmin;
-    border-top: .3vmin solid black;
+    border-top: 1px solid black;
 }
 
 .reference-container.west {
     justify-content: flex-end;
     padding-right: 1vmin;
-    border-right: .3vmin solid black;
+    border-right: 1px solid black;
 }
 
 .reference-container.east {
     justify-content: flex-start;
     padding-left: 1vmin;
-    border-left: .3vmin solid black;
+    border-left: 1px solid black;
 }
 
 .boardBorder {
