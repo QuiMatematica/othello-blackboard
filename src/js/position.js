@@ -15,8 +15,7 @@ export default class Position {
     passCount;
     nextPosition;
     prevPosition;
-
-    errors;
+    moveNumber;
 
     constructor(grid, turn) {
         this.grid = grid;
@@ -25,7 +24,7 @@ export default class Position {
         this.passCount = 0;
         this.checkValidMoves();
         this.comment = null;
-        this.errors = [];
+        this.moveNumber = 0;
     }
 
     static getEmptyPosition() {
@@ -138,7 +137,7 @@ export default class Position {
         this.checkValidMoves();
     }
 
-    playStone(square, isError) {
+    playStone(square) {
         const x = square.x;
         const y = square.y;
         // Don't play if game is over.
@@ -180,19 +179,12 @@ export default class Position {
         let next = new Position(nextGrid, nextTurn);
         // Save the played position
         next.played = new Square(x, y);
+        next.moveNumber = this.moveNumber + 1;
         // Save the flipped stones
         next.flipped = flipped;
         // Link the next position to this one.
         next.prevPosition = this;
-
-        if (isError) {
-            // Add this position as error
-            this.errors.push(next);
-        }
-        else {
-            // Link this position to the next
-            this.nextPosition = next;
-        }
+        this.nextPosition = next;
 
         return next;
     }
