@@ -1,9 +1,6 @@
 <!DOCTYPE HTML>
 
 <?php
-header('Cross-Origin-Opener-Policy: same-origin');
-header('Cross-Origin-Embedder-Policy: require-corp');
-
 $host = $_SERVER['HTTP_HOST'];
 $isLocalhost = str_contains($host, 'localhost');
 $isTest = str_contains($host, 'test');
@@ -14,6 +11,7 @@ $assets = require __DIR__ . '/assets.php';
 
 <html lang="it">
 <head>
+    <script src="coi-serviceworker.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
