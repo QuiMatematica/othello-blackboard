@@ -6,6 +6,7 @@ import MoveHistory from "./move-history";
 
 export default class Blackboard {
 
+    senseiApi;
     currentPosition;
     playMode;
     editMode;
@@ -15,7 +16,8 @@ export default class Blackboard {
     isDragging = false;
     lastCell = null;
 
-    constructor() {
+    constructor(senseiApi) {
+        this.senseiApi = senseiApi;
         this.currentPosition = Position.getStartingPosition();
 
         this.board = new Board();
@@ -205,8 +207,7 @@ class PlayMode {
             }
             if (number === currentPosition.moveNumber + 1) {
                 this.board.play(currentPosition.nextPosition);
-            }
-            else {
+            } else {
                 while (currentPosition.moveNumber !== number) {
                     if (number < currentPosition.moveNumber) {
                         currentPosition = currentPosition.prevPosition;
@@ -280,8 +281,8 @@ class PlayMode {
             this.update();
             this.board.editMode.update();
             // Sensei
-            senseiApi.playMove(square.x + square.y * 8);
-            senseiApi.evaluate();
+            this.board.senseiApi.playMove(square.x + square.y * 8);
+            this.board.senseiApi.evaluate();
         }
     }
 
