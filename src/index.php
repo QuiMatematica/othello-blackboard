@@ -1,6 +1,9 @@
 <!DOCTYPE HTML>
 
 <?php
+header('Cross-Origin-Opener-Policy: same-origin');
+header('Cross-Origin-Embedder-Policy: require-corp');
+
 $host = $_SERVER['HTTP_HOST'];
 $isLocalhost = str_contains($host, 'localhost');
 $isTest = str_contains($host, 'test');
