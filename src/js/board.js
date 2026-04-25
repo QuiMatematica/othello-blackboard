@@ -1,5 +1,5 @@
-import { WHITE } from './position.js';
-import { BLACK } from './position.js';
+import {WHITE} from './position.js';
+import {BLACK} from './position.js';
 import {createStone, setAnimatingFlip, xmlns} from "./page";
 import Blackboard from "./blackboard";
 
@@ -66,6 +66,11 @@ export default class Board {
                 // class is added to the square.
                 div.appendChild(createStone());
 
+                const ann = document.createElement('div');
+                ann.className = 'annotation';
+                ann.id = `annotation-${x + y * 8}`;
+                div.appendChild(ann);
+
                 // Add the square to the DOM and to the 2D array.
                 this.gameBoard.appendChild(div);
                 row.push(div);
@@ -116,8 +121,7 @@ export default class Board {
     setStone(x, y, color) {
         if (color === WHITE) {
             this.grid[y][x].classList.add('white');
-        }
-        else if (color === BLACK) {
+        } else if (color === BLACK) {
             this.grid[y][x].classList.add('black');
         }
     }
@@ -129,8 +133,7 @@ export default class Board {
                 const color = position.grid[y][x];
                 if (color === WHITE) {
                     this.grid[y][x].classList.add('white');
-                }
-                else if (color === BLACK) {
+                } else if (color === BLACK) {
                     this.grid[y][x].classList.add('black');
                 }
             }
@@ -163,8 +166,7 @@ export default class Board {
     static getColor(positionColor) {
         if (positionColor === WHITE) {
             return 'white';
-        }
-        else if (positionColor === BLACK) {
+        } else if (positionColor === BLACK) {
             return 'black';
         }
         return null;
@@ -235,8 +237,7 @@ export default class Board {
         if (Board.isColor(square, "black")) {
             textElement.setAttributeNS(null, 'fill', 'white');
             textElement.setAttributeNS(null, 'stroke', 'white');
-        }
-        else {
+        } else {
             textElement.setAttributeNS(null, 'fill', 'black');
             textElement.setAttributeNS(null, 'stroke', 'black');
         }
@@ -246,8 +247,7 @@ export default class Board {
         textElement.setAttributeNS(null, 'text-anchor', "middle");
         if (letter.length === 1) {
             textElement.setAttributeNS(null, 'font-size', 80);
-        }
-        else {
+        } else {
             textElement.setAttributeNS(null, 'font-size', 60);
         }
         textElement.append(textNode);
@@ -299,11 +299,11 @@ export default class Board {
         marker.setAttribute("markerWidth", String(arrowLen));
         marker.setAttribute("markerHeight", String(arrowWid));
         marker.setAttribute("refX", String(arrowLen));
-        marker.setAttribute("refY", String(arrowWid/2));
+        marker.setAttribute("refY", String(arrowWid / 2));
         marker.setAttribute("orient", "auto");
 
         const polygon = document.createElementNS(xmlns, "polygon");
-        polygon.setAttribute("points", "0 0, " + arrowLen + " " + arrowWid/2 + ", 0 " + arrowWid);
+        polygon.setAttribute("points", "0 0, " + arrowLen + " " + arrowWid / 2 + ", 0 " + arrowWid);
         polygon.setAttribute("fill", color);
 
         marker.appendChild(polygon);
@@ -373,8 +373,7 @@ export default class Board {
         if (to_fill) {
             rect.setAttribute('fill', color);
             rect.setAttribute('opacity', '60%');
-        }
-        else {
+        } else {
             rect.setAttribute('fill', 'none');
             rect.setAttribute('stroke', color);
             rect.setAttribute('stroke-width', '15');
