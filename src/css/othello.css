@@ -446,7 +446,7 @@ svg {
     position: absolute;
     z-index: 10;
     color: rgb(188, 240, 180);
-    font-size: 14px;
+    font-size: 2vmin;
     font-weight: bold;
     pointer-events: none;
 }
