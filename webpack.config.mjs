@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import {WebpackManifestPlugin} from 'webpack-manifest-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 //const isProduction = argv.mode === 'production';
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +25,14 @@ export default {
                 test: /\.css$/i,
                 use: [MiniCssExtractPlugin.loader, 'css-loader'],
             },
+        ],
+    },
+
+    optimization: {
+        minimizer: [
+            new TerserPlugin({
+                exclude: /sensei_wasm_generated\.js/,
+            }),
         ],
     },
 
