@@ -279,6 +279,9 @@ class PlayMode {
             this.moveHistory.play(nextPosition);
             this.update();
             this.board.editMode.update();
+            // Sensei
+            senseiApi.playMove(square.x + square.y * 8);
+            senseiApi.evaluate();
         }
     }
 

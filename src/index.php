@@ -11,8 +11,8 @@ $assets = require __DIR__ . '/assets.php';
 
 <html lang="it">
 <head>
-    <script src="coi-serviceworker.js"></script>
     <meta charset="utf-8">
+    <script src="<?= $root ?>coi-serviceworker.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
           content="Othello blackboard">
