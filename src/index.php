@@ -203,6 +203,7 @@ $assets = require __DIR__ . '/assets.php';
     </div>
 
 <script src="<?= $assets['main.js'] ?>"></script>
+<script type="module" src="sensei.js"></script>
 
 </body>
 </html>
