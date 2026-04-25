@@ -42,7 +42,7 @@ export default {
         }),
         new CopyPlugin({
             patterns: [
-                {from: 'src/.htaccess', to: '.htaccess'},
+                { from: 'src/.htaccess', to: '.htaccess', toType: 'file' },  // 👈 aggiunto toType
                 {from: 'src/index.php', to: 'index.php'},
                 {from: 'src/manifest.json', to: 'manifest.json'},
                 {from: 'src/offline.html', to: 'offline.html'},
