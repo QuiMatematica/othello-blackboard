@@ -37,8 +37,13 @@ export default {
                 {from: 'src/manifest.json', to: 'manifest.json'},
                 {from: 'src/offline.html', to: 'offline.html'},
                 {from: 'src/service-worker.js', to: 'service-worker.js'},
+                {from: 'src/sensei.js', to: 'sensei.js'},
+                {from: 'src/sensei_api.js', to: 'sensei_api.js'},
+                {from: 'src/sensei_wasm_generated.data', to: 'sensei_wasm_generated.data'},
+                {from: 'src/sensei_wasm_generated.js', to: 'sensei_wasm_generated.js'},
+                {from: 'src/sensei_wasm_generated.wasm', to: 'sensei_wasm_generated.wasm'},
                 {from: 'src/icons', to: 'icons/.'},
-                {from: 'src/images', to: 'images/.'}
+                {from: 'src/images', to: 'images/.'},
             ]
         }),
         new WebpackManifestPlugin({
