@@ -49,6 +49,7 @@ export default class Blackboard {
     }
 
     onClick(e) {
+        console.log("Blackboard: Click on " + e.currentTarget.dataset.x + " " + e.currentTarget.dataset.y);
         if (isAnimatingFlip()) {
             return;
         }
@@ -156,6 +157,7 @@ class EditMode {
     }
 
     onClick(x, y) {
+        console.log("EditMode: Click on " + x + " " + y);
         const square = new Square(parseInt(x), parseInt(y));
         let position = this.board.currentPosition;
         position = position.setStone(square, this.currentColor);
@@ -163,6 +165,20 @@ class EditMode {
         this.board.playMode.update();
         this.board.playMode.moveHistory.reset();
         this.update();
+        // Sensei
+        if (this.currentColor === BLACK) {
+            console.log("Set black stone : " + (square.x + square.y * 8));
+            this.board.senseiApi.setBlackSquare(square.x + square.y * 8);
+        }
+        else if (this.currentColor === WHITE) {
+            console.log("Set black stone : " + (square.x + square.y * 8));
+            this.board.senseiApi.setWhiteSquare(square.x + square.y * 8);
+        }
+        else {
+            console.log("Set black stone : " + (square.x + square.y * 8));
+            this.board.senseiApi.setEmptySquare(square.x + square.y * 8);
+        }
+        this.board.senseiApi.evaluate();
     }
 
     onPointerDown(x, y) {
