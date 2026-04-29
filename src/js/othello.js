@@ -106,5 +106,7 @@ window.onUpdateAnnotations = (threadId, finished, move) => {
 (async () => {
     senseiApi.init(window.onSetBoard, window.onUpdateAnnotations).then(() => {
         console.log("Engine Ready");
+        document.getElementById('senseiLoading').style.display = 'none';
+        document.getElementById('sensei').classList.remove("d-none");
     });
 })()

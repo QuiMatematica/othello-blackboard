@@ -127,13 +127,13 @@ $assets = require __DIR__ . '/assets.php';
                             disabled=""></button>
                 </div>
             </div>
-            <div class="text-center my-2">
+            <div id="senseiLoading" class="text-center my-2">
                 Sensei engine loading...
             </div>
-            <div class="text-center my-2 d-hidden">
+            <div id="sensei" class="text-center my-2 d-none">
                 <div class="sensei-switch-wrapper form-check form-switch p-0">
                     <label class="sensei-label ms-2" for="senseiSwitch">Sensei:</label>
-                    <input class="form-check-input m-0" type="checkbox" role="switch" id="senseiSwitch" disabled>
+                    <input class="form-check-input m-0" type="checkbox" role="switch" id="senseiSwitch">
                 </div>
             </div>
             <div id="move-history">
