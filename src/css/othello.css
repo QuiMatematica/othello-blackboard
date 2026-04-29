@@ -472,45 +472,6 @@ svg {
     border-color: #1D9E75;
 }
 
-.sensei-bubble {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 0;
-    background: #1a1a1a;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    padding: 5px 11px;
-    border-radius: 8px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.4s ease;
-}
-
-/* Codina del fumetto */
-.sensei-bubble::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 16px;
-    border: 6px solid transparent;
-    border-top-color: #1a1a1a;
-}
-
-/* Fumetto "Engine ready" – verde */
-.sensei-bubble.ready {
-    background: #1D9E75;
-}
-
-.sensei-bubble.ready::after {
-    border-top-color: #1D9E75;
-}
-
-.sensei-bubble.hidden {
-    opacity: 0;
-}
-
 /* ==================
    Sensei
    ================== */

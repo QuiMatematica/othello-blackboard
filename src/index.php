@@ -128,9 +128,11 @@ $assets = require __DIR__ . '/assets.php';
                 </div>
             </div>
             <div class="text-center my-2">
+                Sensei engine loading...
+            </div>
+            <div class="text-center my-2 d-hidden">
                 <div class="sensei-switch-wrapper form-check form-switch p-0">
                     <label class="sensei-label ms-2" for="senseiSwitch">Sensei:</label>
-                    <div class="sensei-bubble" id="senseiBubble">Engine loading...</div>
                     <input class="form-check-input m-0" type="checkbox" role="switch" id="senseiSwitch" disabled>
                 </div>
             </div>
