@@ -1,10 +1,3 @@
-:root {
-    /* The size of the squares in the Othello board.  Many other things are
-     * computed relative to this size, which will change in certain screen
-     * layouts and sizes. */
-    --square-size: 2em;
-}
-
 html {
     font-size: clamp(18px, 2.5vmin, 48px);
 }
@@ -25,7 +18,7 @@ body {
 
 /* Layout orizzontale (default desktop) */
 #board {
-    height: min(100%, 70vw);
+    height: min(100%, 70dvw);
     aspect-ratio: 1 / 1;
     background-color: lightgray;
     display: flex;
@@ -82,7 +75,8 @@ body {
     }
 
     #board {
-        width: min(100%, 70vh);
+        width: min(100%, 70dvh);
+        margin: 0 auto;
         height: auto;
     }
 
@@ -124,7 +118,7 @@ body {
 .gameBoard {
     /* The game board is an 8x8 grid. */
     display: grid;
-    grid-template: 6% repeat(8, 11%) 6% / 6% repeat(8, 11%) 6%;
+    grid-template: 6fr repeat(8, 11fr) 6fr / 6fr repeat(8, 11fr) 6fr;
 
     /* The border around the whole board. */
     border: 0 solid black;
