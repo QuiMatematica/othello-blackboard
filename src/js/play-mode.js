@@ -167,7 +167,7 @@ export default class PlayMode {
 
     updateEvaluation() {
         const senseiActive = this.senseiSwitch.checked;
-        if (senseiActive) {
+        if (senseiActive && this.board.currentMode === this) {
             const position = this.board.currentPosition;
             const senseiStr = position.toSenseiStr();
             console.log("Sensei str: " + senseiStr);

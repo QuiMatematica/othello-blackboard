@@ -1,8 +1,8 @@
-import Position, {BLACK, EMPTY, WHITE} from "./position";
+import Position from "./position";
 import Board from "./board";
-import Square from "./square";
 import {isAnimatingFlip} from "./page";
 import PlayMode from "./play-mode";
+import EditMode from "./edit-mode";
 
 export default class Blackboard {
 
@@ -41,9 +41,12 @@ export default class Blackboard {
 
         document.getElementById('play-tab').addEventListener('click', () => {
             this.currentMode = this.playMode;
+            this.playMode.updateEvaluation();
             console.log("Play mode");
         });
         document.getElementById('set-tab').addEventListener('click', () => {
+            this.board.cleanEvaluations();
+            this.senseiApi.stop();
             this.currentMode = this.editMode;
             console.log("Edit mode");
         })
@@ -111,111 +114,5 @@ export default class Blackboard {
         }
     };
 
-
-}
-
-class EditMode {
-
-    board;
-    currentColor;
-
-    constructor(board) {
-        this.board = board;
-        this.currentColor = BLACK;
-
-        document.getElementById('black-stone').addEventListener('change', (e) => {
-            if (e.target.checked) {
-                this.currentColor = BLACK;
-            }
-        });
-        document.getElementById('white-stone').addEventListener('change', (e) => {
-            if (e.target.checked) {
-                this.currentColor = WHITE;
-            }
-        });
-        document.getElementById('empty-square').addEventListener('change', (e) => {
-            if (e.target.checked) {
-                this.currentColor = EMPTY;
-            }
-        });
-
-        document.getElementById('black-turn').addEventListener('change', () => {
-            let position = this.board.currentPosition;
-            position = position.changeTurn(BLACK);
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
-        });
-        document.getElementById('white-turn').addEventListener('change', () => {
-            let position = this.board.currentPosition;
-            position = position.changeTurn(WHITE);
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
-        });
-
-        document.getElementById('reset-position').addEventListener('click', () => {
-            const position = Position.getStartingPosition();
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
-            this.update();
-        });
-
-        document.getElementById('empty-position').addEventListener('click', () => {
-            const position = Position.getEmptyPosition();
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
-            this.update();
-        });
-
-    }
-
-    onClick(x, y) {
-        console.log("EditMode: Click on " + x + " " + y);
-        const square = new Square(parseInt(x), parseInt(y));
-        let position = this.board.currentPosition;
-        position = position.setStone(square, this.currentColor);
-        this.board.update(position);
-        this.board.playMode.update();
-        this.board.playMode.moveHistory.reset();
-        this.update();
-        // Sensei
-        if (this.currentColor === BLACK) {
-            console.log("Set black stone : " + (square.x + square.y * 8));
-            this.board.senseiApi.setBlackSquare(square.x + square.y * 8);
-        } else if (this.currentColor === WHITE) {
-            console.log("Set black stone : " + (square.x + square.y * 8));
-            this.board.senseiApi.setWhiteSquare(square.x + square.y * 8);
-        } else {
-            console.log("Set black stone : " + (square.x + square.y * 8));
-            this.board.senseiApi.setEmptySquare(square.x + square.y * 8);
-        }
-        this.board.senseiApi.evaluate();
-    }
-
-    onPointerDown(x, y) {
-        this.onClick(x, y);
-    }
-
-    onPointerMove(x, y) {
-        this.onClick(x, y);
-    }
-
-    onPointerUp() {
-    }
-
-    update() {
-        this.board.currentPosition.turn === BLACK ? document.getElementById('black-turn').checked = true : document.getElementById('white-turn').checked = true;
-    }
-
-}
-
-class DrawMode {
-
-}
-
-class LessonsMode {
 
 }
