@@ -32,3 +32,5 @@ RewriteRule ^(.*)$ https://bb.quiothello.it/$1 [R=301,L]
         Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
     </IfModule>
 </FilesMatch>
+
+AddType application/wasm .wasm
