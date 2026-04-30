@@ -12,7 +12,15 @@ $assets = require __DIR__ . '/assets.php';
 <html lang="it">
 <head>
     <meta charset="utf-8">
-    <script src="<?= $root ?>coi-serviceworker.js"></script>
+    <?php
+    if ($isLocalhost) {
+        header('Cross-Origin-Opener-Policy: same-origin');
+        header('Cross-Origin-Embedder-Policy: require-corp');
+    }
+    else {
+        echo '<script src="' . $root . 'coi-serviceworker.js"></script>';
+    }
+    ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
           content="Othello blackboard">

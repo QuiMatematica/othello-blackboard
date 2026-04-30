@@ -2,10 +2,11 @@ import Position, {BLACK, EMPTY, WHITE} from "./position";
 import Board from "./board";
 import Square from "./square";
 import {isAnimatingFlip} from "./page";
-import MoveHistory from "./move-history";
+import PlayMode from "./play-mode";
 
 export default class Blackboard {
 
+    senseiOn = false;
     senseiApi;
     currentPosition;
     playMode;
@@ -88,13 +89,28 @@ export default class Blackboard {
 
     update(nextPosition) {
         this.currentPosition = nextPosition;
+        this.board.cleanEvaluations();
         this.board.setPosition(nextPosition);
     }
 
     play(nextPosition) {
         this.currentPosition = nextPosition;
+        this.board.cleanEvaluations();
         this.board.playPosition(nextPosition);
     }
+
+    updateEvaluations(threadId, finished, move) {
+        // 2. Fetch the new evaluation array from C++
+        const children = this.senseiApi.getChildrenEvaluations(threadId);
+        if (!children || children.length === 0) return;
+
+        this.board.updateEvaluations(threadId, finished, move, children);
+        // 6. Continue evaluating if not finished
+        if (!finished) {
+            this.senseiApi.evaluate();
+        }
+    };
+
 
 }
 
@@ -169,12 +185,10 @@ class EditMode {
         if (this.currentColor === BLACK) {
             console.log("Set black stone : " + (square.x + square.y * 8));
             this.board.senseiApi.setBlackSquare(square.x + square.y * 8);
-        }
-        else if (this.currentColor === WHITE) {
+        } else if (this.currentColor === WHITE) {
             console.log("Set black stone : " + (square.x + square.y * 8));
             this.board.senseiApi.setWhiteSquare(square.x + square.y * 8);
-        }
-        else {
+        } else {
             console.log("Set black stone : " + (square.x + square.y * 8));
             this.board.senseiApi.setEmptySquare(square.x + square.y * 8);
         }
@@ -194,165 +208,6 @@ class EditMode {
 
     update() {
         this.board.currentPosition.turn === BLACK ? document.getElementById('black-turn').checked = true : document.getElementById('white-turn').checked = true;
-    }
-
-}
-
-class PlayMode {
-
-    board;
-    scoreElements = {};
-    turnElement;
-    first;
-    next;
-    prev;
-    last;
-    moveHistory;
-
-    constructor(board) {
-        this.board = board;
-        this.scoreElements.black = document.getElementById('black-score');
-        this.scoreElements.white = document.getElementById('white-score');
-        this.turnElement = document.getElementById('turn');
-        this.moveHistory = new MoveHistory((e) => {
-            const target = e.currentTarget;
-            const number = Number(target.dataset.number);
-            let currentPosition = this.board.currentPosition;
-            if (number === currentPosition.moveNumber) {
-                return;
-            }
-            if (number === currentPosition.moveNumber + 1) {
-                this.board.play(currentPosition.nextPosition);
-            } else {
-                while (currentPosition.moveNumber !== number) {
-                    if (number < currentPosition.moveNumber) {
-                        currentPosition = currentPosition.prevPosition;
-                    } else {
-                        currentPosition = currentPosition.nextPosition;
-                    }
-                }
-                this.board.update(currentPosition);
-            }
-            this.update();
-            this.updateHistory();
-        });
-
-        this.first = document.getElementById('first');
-        this.first.addEventListener('click', () => {
-            let curPosition = this.board.currentPosition;
-            let prevPosition = curPosition.prevPosition;
-            if (prevPosition != null) {
-                while (prevPosition != null) {
-                    curPosition = prevPosition;
-                    prevPosition = curPosition.prevPosition;
-                }
-                this.board.update(curPosition);
-                this.update();
-                this.updateHistory();
-            }
-        })
-        this.prev = document.getElementById('prev');
-        this.prev.addEventListener('click', () => {
-            const prevPosition = this.board.currentPosition.prevPosition;
-            if (prevPosition != null) {
-                this.board.update(prevPosition);
-                this.update();
-                this.updateHistory();
-            }
-        })
-        this.next = document.getElementById('next');
-        this.next.addEventListener('click', () => {
-            const nextPosition = this.board.currentPosition.nextPosition;
-            if (nextPosition != null) {
-                this.board.play(nextPosition);
-                this.update();
-                this.updateHistory();
-            }
-        })
-        this.last = document.getElementById('last');
-        this.last.addEventListener('click', () => {
-            let curPosition = this.board.currentPosition;
-            let nextPosition = curPosition.nextPosition;
-            if (nextPosition != null) {
-                while (nextPosition != null) {
-                    curPosition = nextPosition;
-                    nextPosition = curPosition.nextPosition;
-                }
-                this.board.update(curPosition);
-                this.update();
-                this.updateHistory();
-            }
-        })
-    }
-
-    onClick(x, y) {
-        const current = this.board.currentPosition;
-
-        const square = new Square(parseInt(x), parseInt(y));
-        const nextPosition = current.playStone(square);
-        // If the play was valid, update the views.
-        if (nextPosition != null) {
-            this.board.play(nextPosition);
-            this.moveHistory.play(nextPosition);
-            this.update();
-            this.board.editMode.update();
-            // Sensei
-            this.board.senseiApi.playMove(square.x + square.y * 8);
-            this.board.senseiApi.evaluate();
-        }
-    }
-
-    onPointerDown(x, y) {
-    }
-
-    onPointerMove(x, y) {
-    }
-
-    onPointerUp() {
-    }
-
-    update() {
-        this.updateScore();
-        this.updateTurn();
-        this.updateButtons();
-    }
-
-    updateScore() {
-        const scores = this.board.currentPosition.countStones();
-        for (const color in scores) {
-            this.scoreElements[color].innerHTML = scores[color];
-        }
-    }
-
-    updateTurn() {
-        this.turnElement.classList.remove('bi-caret-left-fill');
-        this.turnElement.classList.remove('bi-caret-right-fill');
-        this.turnElement.classList.remove('bi-sign-stop');
-        const position = this.board.currentPosition;
-        if (position.gameOver) {
-            this.turnElement.classList.add('bi-sign-stop');
-            this.turnElement.style.color = 'black';
-        } else if (position.turn === WHITE) {
-            this.turnElement.classList.add('bi-caret-right-fill');
-            this.turnElement.style.color = 'white';
-        } else {
-            this.turnElement.classList.add('bi-caret-left-fill');
-            this.turnElement.style.color = 'black';
-        }
-
-    }
-
-    updateButtons() {
-        const position = this.board.currentPosition;
-        this.first.disabled = (position.prevPosition == null);
-        this.prev.disabled = (position.prevPosition == null);
-        this.next.disabled = (position.nextPosition == null);
-        this.last.disabled = (position.nextPosition == null);
-    }
-
-    updateHistory() {
-        const position = this.board.currentPosition;
-        this.moveHistory.updateCurrent(position.moveNumber);
     }
 
 }

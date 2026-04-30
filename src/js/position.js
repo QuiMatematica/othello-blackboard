@@ -78,7 +78,7 @@ export default class Position {
     }
 
     countStones() {
-        const scores = { black: 0, white: 0 };
+        const scores = {black: 0, white: 0};
 
         for (let y = 0; y < 8; ++y) {
             for (let x = 0; x < 8; ++x) {
@@ -161,7 +161,7 @@ export default class Position {
         // Flip over the opponent's pieces in every valid direction.
         for (const [dx, dy] of Position.allDirections()) {
             if (this.isValidInDirection(x, y, dx, dy)) {
-                for (const [nx,ny] of Position.scanDirection(x, y, dx, dy)) {
+                for (const [nx, ny] of Position.scanDirection(x, y, dx, dy)) {
                     // Stop on your own color.
                     if (this.grid[ny][nx] === this.turn) {
                         break;
@@ -173,7 +173,7 @@ export default class Position {
         }
 
         // Change turn; it will be checked by the new position constructor.
-        const nextTurn = - this.turn;
+        const nextTurn = -this.turn;
 
         // Build the next position.
         let next = new Position(nextGrid, nextTurn);
@@ -248,9 +248,31 @@ export default class Position {
         return false;
     }
 
+    toSenseiStr() {
+        let str = "";
+        for (let y = 0; y < 8; ++y) {
+            for (let x = 0; x < 8; ++x) {
+                if (this.grid[y][x] === BLACK) {
+                    str += "X";
+                } else if (this.grid[y][x] === WHITE) {
+                    str += "O";
+                } else {
+                    str += "-";
+                }
+            }
+        }
+        str += " ";
+        if (this.turn === BLACK) {
+            str += "X";
+        } else {
+            str += "O";
+        }
+        return str;
+    }
+
     // A generator that yields board squares starting at x,y and moving in the
     // direction dx,dy, excluding the starting position at x,y.
-    static *scanDirection(x, y, dx, dy) {
+    static* scanDirection(x, y, dx, dy) {
         x += dx;
         y += dy;
 
@@ -259,7 +281,7 @@ export default class Position {
         }
     }
 
-    static *allDirections() {
+    static* allDirections() {
         for (const dx of [-1, 0, 1]) {
             for (const dy of [-1, 0, 1]) {
                 // Never yield direction [0, 0] (in place)
