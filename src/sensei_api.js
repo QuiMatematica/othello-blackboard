@@ -78,8 +78,8 @@ export class SenseiAPI {
     this.params.sensei_action = this._engine.SenseiAction.Evaluates;
 
     this.updateParams({});
-    this.newGame();
-    this.evaluate();
+    // this.newGame();
+    // this.evaluate();
   }
 
   updateParams(newValues) {

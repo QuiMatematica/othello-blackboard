@@ -377,11 +377,11 @@ svg {
 
 #move-history {
     mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 10px,
-        black calc(100% - 10px),
-        transparent
+            to right,
+            transparent,
+            black 10px,
+            black calc(100% - 10px),
+            transparent
     );
 }
 
@@ -408,14 +408,16 @@ svg {
     cursor: pointer;
 }
 
-.move.white{
+.move.white {
     color: white;
     border-color: white;
 }
-.move.black{
+
+.move.black {
     color: black;
     border-color: black;
 }
+
 .move.current {
     border-width: 2px;
 }
@@ -435,5 +437,54 @@ svg {
 
 .form-switch .form-check-input:focus {
     border-color: var(--bs-success);
-    box-shadow: 0 0 0 .25rem rgba(25,135,84,.25);
+    box-shadow: 0 0 0 .25rem rgba(25, 135, 84, .25);
+}
+
+/* ==================
+   Sensei switch
+   ================== */
+
+.sensei-switch-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sensei-label {
+    user-select: none;
+}
+
+/* Switch personalizzato */
+.sensei-switch-wrapper .form-check-input {
+    width: 3em;
+    height: 1.6em;
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.sensei-switch-wrapper .form-check-input:checked {
+    background-color: #1D9E75;
+    border-color: #1D9E75;
+}
+
+.sensei-switch-wrapper .form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.25);
+    border-color: #1D9E75;
+}
+
+/* ==================
+   Sensei
+   ================== */
+
+.annotation {
+    position: absolute;
+    z-index: 10;
+    color: rgb(188, 240, 180);
+    font-size: 2vmin;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.annotation.optimal {
+    color: rgb(249, 229, 52);
 }
