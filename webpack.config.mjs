@@ -1,4 +1,6 @@
 import path from 'path';
+import crypto from 'crypto';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
@@ -7,6 +9,12 @@ import TerserPlugin from 'terser-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Hash calcolato una volta sola: usato sia nel nome del .wasm
+// sia per aggiornare il riferimento dentro il .js generato da Emscripten.
+const wasmContent = fs.readFileSync(path.resolve(__dirname, 'src/sensei_wasm_generated.wasm'));
+const wasmHash = crypto.createHash('md5').update(wasmContent).digest('hex');
+const wasmHashedName = `sensei_wasm_generated.${wasmHash}.wasm`;
 
 export default {
 
@@ -66,8 +74,20 @@ export default {
                 { from: 'src/coi-serviceworker.js', to: 'coi-serviceworker.js' },
                 { from: 'src/sensei_api.js', to: 'sensei_api.js' },
                 { from: 'src/sensei_wasm_generated.data', to: 'sensei_wasm_generated.data' },
-                { from: 'src/sensei_wasm_generated.js', to: 'sensei_wasm_generated.js' },
-                { from: 'src/sensei_wasm_generated.wasm', to: 'sensei_wasm_generated.wasm' },
+                {
+                    // 👇 Riscrive nel .js il riferimento al .wasm con il nome hashato,
+                    //    usando lo stesso hash calcolato sopra.
+                    from: 'src/sensei_wasm_generated.js',
+                    to: 'sensei_wasm_generated.js',
+                    transform(content) {
+                        return content.toString().replaceAll('sensei_wasm_generated.wasm', wasmHashedName);
+                    },
+                },
+                {
+                    // 👇 Copia il .wasm con lo stesso nome hashato usato nel .js.
+                    from: 'src/sensei_wasm_generated.wasm',
+                    to: wasmHashedName,
+                },
                 { from: 'src/icons', to: 'icons/.' },
                 { from: 'src/images', to: 'images/.' },
             ]
