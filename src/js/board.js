@@ -4,15 +4,9 @@ import {createStone, setAnimatingFlip, xmlns} from "./page";
 import Blackboard from "./blackboard";
 
 const evalFormatter = new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
     signDisplay: 'always' // Forces + for positive and 0, - for negative
-});
-
-// Formats large numbers like Flutter's prettyPrintDouble (e.g., 1.5M, 24K)
-const compactFormatter = new Intl.NumberFormat('en-US', {
-    notation: "compact",
-    maximumFractionDigits: 1
 });
 
 export default class Board {
@@ -418,7 +412,7 @@ export default class Board {
 
         for (let i = 0; i < children.length; i++) {
             const child = children[i];
-            const displayEval = -child.eval;
+            const displayEval = -child.median_eval;
             nVisited += child.descendants;
             nVisitedBook += child.descendants_book;
             seconds += child.seconds;
@@ -430,7 +424,7 @@ export default class Board {
         // 4. Second loop: paint the annotations
         for (let i = 0; i < children.length; i++) {
             const child = children[i];
-            const displayEval = -child.eval;
+            const displayEval = -child.median_eval;
             for (let j = 0; j < child.num_moves; ++j) {
                 const moveId = `annotation-${child.moves[j]}`;
                 const annElement = document.getElementById(moveId);
