@@ -1,6 +1,6 @@
 import {WHITE} from './position.js';
 import {BLACK} from './position.js';
-import {createStone, setAnimatingFlip, xmlns} from "./page";
+import {setAnimatingFlip} from "./page";
 import Blackboard from "./blackboard";
 
 const evalFormatter = new Intl.NumberFormat('en-US', {
@@ -68,13 +68,15 @@ export default class Board {
                     setAnimatingFlip(false);
                 });
 
+                const senseiId = 63 - (x + y * 8);
+
                 // Add the stone itself, which will not show up until a black or white
                 // class is added to the square.
-                div.appendChild(createStone());
+                div.appendChild(createStone(senseiId));
 
                 const ann = document.createElement('div');
                 ann.className = 'annotation';
-                ann.id = `annotation-${63 - (x + y * 8)}`;
+                ann.id = `annotation-${senseiId}`;
                 div.appendChild(ann);
 
                 // Add the square to the DOM and to the 2D array.
@@ -406,15 +408,15 @@ export default class Board {
 
         // 3. First loop: compute the best evaluation
         let bestEval = -Infinity;
-        let nVisited = 0n;
-        let nVisitedBook = 0n;
+        let nVisited = 0;
+        let nVisitedBook = 0;
         let seconds = 0.0;
 
         for (let i = 0; i < children.length; i++) {
             const child = children[i];
             const displayEval = -child.median_eval;
-            nVisited += child.descendants;
-            nVisitedBook += child.descendants_book;
+            nVisited += Number(child.descendants);
+            nVisitedBook += Number(child.descendants_book);
             seconds += child.seconds;
             if (displayEval > bestEval) {
                 bestEval = displayEval;
@@ -426,6 +428,11 @@ export default class Board {
             const child = children[i];
             // Ensures that we never get -0.00.
             const displayEval = Math.round(-child.median_eval * 100) / 100 + 0.0000001;
+
+
+            const progress = 1 - child.prob_lower_eval - child.prob_upper_eval;
+            console.log("progress: ", progress);
+
             for (let j = 0; j < child.num_moves; ++j) {
                 const moveId = `annotation-${child.moves[j]}`;
                 const annElement = document.getElementById(moveId);
@@ -438,6 +445,16 @@ export default class Board {
                     } else {
                         annElement.classList.remove('optimal');
                     }
+                }
+
+                const progressTrack = document.getElementById(`progress-track-${child.moves[j]}`);
+                if (progressTrack) {
+                    progressTrack.classList.remove("d-none");
+                }
+                const progressFill = document.getElementById(`progress-fill-${child.moves[j]}`);
+                if (progressFill) {
+                    progressFill.classList.remove("d-none");
+                    progressFill.style.strokeDashoffset = (2 * Math.PI * 50 * (1 - progress)).toString();
                 }
             }
         }
@@ -461,4 +478,67 @@ export default class Board {
         // document.getElementById('stat-time').innerText = timeStatusText;
     }
 
+}
+
+const xmlns = 'http://www.w3.org/2000/svg';
+
+function createStone(senseiId) {
+    const svg = document.createElementNS(xmlns, 'svg');
+    svg.setAttributeNS(null, 'viewBox', '0 0 100 100');
+
+    // The circle of the stone itself.
+    const circle = document.createElementNS(xmlns, 'circle');
+    circle.classList.add('stone');
+    circle.setAttributeNS(null, 'cx', '50');
+    circle.setAttributeNS(null, 'cy', '50');
+    circle.setAttributeNS(null, 'r', '45');
+    svg.appendChild(circle);
+
+    const crossLineHor = document.createElementNS(xmlns, 'line');
+    crossLineHor.classList.add("cross-line");
+    crossLineHor.classList.add("horizontal");
+    crossLineHor.setAttributeNS(null, 'x1', '30');
+    crossLineHor.setAttributeNS(null, 'y1', '50');
+    crossLineHor.setAttributeNS(null, 'x2', '70');
+    crossLineHor.setAttributeNS(null, 'y2', '50');
+    svg.appendChild(crossLineHor);
+
+    const crossLineVer = document.createElementNS(xmlns, 'line');
+    crossLineVer.classList.add("cross-line");
+    crossLineVer.classList.add("vertical");
+    crossLineVer.setAttributeNS(null, 'x1', '50');
+    crossLineVer.setAttributeNS(null, 'y1', '30');
+    crossLineVer.setAttributeNS(null, 'x2', '50');
+    crossLineVer.setAttributeNS(null, 'y2', '70');
+    svg.appendChild(crossLineVer);
+
+    const progressTrack = document.createElementNS(xmlns, 'circle');
+    progressTrack.id = `progress-track-${senseiId}`;
+    progressTrack.classList.add('progress-track');
+    progressTrack.classList.add('d-none');
+    progressTrack.setAttributeNS(null, 'cx', '50');
+    progressTrack.setAttributeNS(null, 'cy', '50');
+    progressTrack.setAttributeNS(null, 'r', '45');
+    progressTrack.setAttributeNS(null, 'fill', 'none');
+    progressTrack.setAttributeNS(null, "stroke", "gray");
+    progressTrack.setAttributeNS(null, "stroke-width", "6");
+    svg.appendChild(progressTrack);
+
+    const progressFill = document.createElementNS(xmlns, 'circle');
+    progressFill.id = `progress-fill-${senseiId}`;
+    progressFill.classList.add('progress-fill');
+    progressFill.classList.add('d-none');
+    progressFill.setAttributeNS(null, 'cx', '50');
+    progressFill.setAttributeNS(null, 'cy', '50');
+    progressFill.setAttributeNS(null, 'r', '45');
+    progressFill.setAttributeNS(null, 'fill', 'none');
+    progressFill.setAttributeNS(null, "stroke", "yellow");
+    progressFill.setAttributeNS(null, "stroke-width", "6");
+    progressFill.setAttributeNS(null, "stroke-dasharray", (2 * Math.PI * 45).toString());
+    progressFill.setAttributeNS(null, "stroke-dashoffset", "25");
+    progressFill.setAttributeNS(null, "stroke-linecap", "round");
+    progressFill.setAttributeNS(null, "transform", "rotate(-90, 50, 50)");
+    svg.appendChild(progressFill);
+
+    return svg;
 }

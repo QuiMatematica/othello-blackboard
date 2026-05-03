@@ -481,3 +481,7 @@ svg {
 .annotation.optimal {
     color: rgb(249, 229, 52);
 }
+
+.progress-fill {
+    transition: stroke-dashoffset 0.5s ease;
+}
