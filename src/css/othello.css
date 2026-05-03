@@ -169,26 +169,18 @@ body {
 }
 
 .reference-container.north {
-    align-items: flex-end;
-    padding-bottom: 3vmin;
     border-bottom: 1px solid black;
 }
 
 .reference-container.south {
-    align-items: flex-start;
-    padding-top: 3vmin;
     border-top: 1px solid black;
 }
 
 .reference-container.west {
-    justify-content: flex-end;
-    padding-right: 1vmin;
     border-right: 1px solid black;
 }
 
 .reference-container.east {
-    justify-content: flex-start;
-    padding-left: 1vmin;
     border-left: 1px solid black;
 }
 

@@ -1,7 +1,6 @@
 import {WHITE} from './position.js';
 import {BLACK} from './position.js';
 import {createStone, setAnimatingFlip, xmlns} from "./page";
-import Blackboard from "./blackboard";
 
 const evalFormatter = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
