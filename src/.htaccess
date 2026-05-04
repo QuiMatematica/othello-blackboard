@@ -1,12 +1,11 @@
 RewriteEngine On
 
-# index.php → /
-RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
-RewriteRule ^index\.php$ / [R=301,L]
+# Forza HTTPS
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 
-# Forza HTTPS + non-www
-RewriteCond %{HTTPS} !=on [OR]
-RewriteCond %{HTTP_HOST} ^bb\.quiothello\.it$ [NC]
+# Forza non-www (rimuove www se presente)
+RewriteCond %{HTTP_HOST} ^www\.bb\.quiothello\.it$ [NC]
 RewriteRule ^(.*)$ https://bb.quiothello.it/$1 [R=301,L]
 
 # MIME type per WebAssembly
