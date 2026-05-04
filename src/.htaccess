@@ -4,31 +4,49 @@ RewriteEngine On
 RewriteCond %{THE_REQUEST} \s/+index\.php[\s?] [NC]
 RewriteRule ^index\.php$ / [R=301,L]
 
-# forza https + non-www
+# Forza HTTPS + non-www
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^bb\.quiothello\.it$ [NC]
 RewriteRule ^(.*)$ https://bb.quiothello.it/$1 [R=301,L]
 
-# Imposta gli header di scadenza a "passato"
+# MIME type per WebAssembly
+AddType application/wasm .wasm
+
 <IfModule mod_expires.c>
     ExpiresActive On
-    ExpiresDefault "access plus 0 seconds"
+
+    # Default conservativo
+    ExpiresDefault "access plus 1 hour"
+
+    # Contenuto dinamico: nessuna cache
+    ExpiresByType text/html "access plus 0 seconds"
+
+    # Asset statici con versioning (hash nel nome file): cache lunga
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType application/wasm "access plus 1 year"
+
+    # Immagini e font: cache media
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/webp "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
-# Imposta gli header di controllo della cache
 <IfModule mod_headers.c>
-    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    Header set Pragma "no-cache"
-    Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
-</IfModule>
+    # HTML: sempre rivalidato
+    <FilesMatch "\.(html|htm|php)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
 
-# Disabilita la cache per i file dinamici (PHP, CGI, etc.)
-<FilesMatch "\.(php|cgi|pl|htm|html|js|css|json)$">
-    FileETag None
-    <IfModule mod_headers.c>
-        Header unset ETag
-        Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-        Header set Pragma "no-cache"
-        Header set Expires "Thu, 01 Jan 1970 00:00:00 GMT"
-    </IfModule>
-</FilesMatch>
+    # Asset con versioning: cache immutabile
+    <FilesMatch "\.(js|css|wasm|woff2)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+
+    # Immagini: cache lunga ma rivalidabile
+    <FilesMatch "\.(jpg|jpeg|png|webp|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+</IfModule>

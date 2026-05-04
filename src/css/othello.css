@@ -1,10 +1,3 @@
-:root {
-    /* The size of the squares in the Othello board.  Many other things are
-     * computed relative to this size, which will change in certain screen
-     * layouts and sizes. */
-    --square-size: 2em;
-}
-
 html {
     font-size: clamp(18px, 2.5vmin, 48px);
 }
@@ -25,7 +18,7 @@ body {
 
 /* Layout orizzontale (default desktop) */
 #board {
-    height: min(100%, 70vw);
+    height: min(100%, 70dvw);
     aspect-ratio: 1 / 1;
     background-color: lightgray;
     display: flex;
@@ -82,7 +75,8 @@ body {
     }
 
     #board {
-        width: min(100%, 70vh);
+        width: min(100%, 70dvh);
+        margin: 0 auto;
         height: auto;
     }
 
@@ -124,7 +118,7 @@ body {
 .gameBoard {
     /* The game board is an 8x8 grid. */
     display: grid;
-    grid-template: repeat(10, 1fr) / repeat(10, 1fr);
+    grid-template: 6fr repeat(8, 11fr) 6fr / 6fr repeat(8, 11fr) 6fr;
 
     /* The border around the whole board. */
     border: 0 solid black;
@@ -175,26 +169,18 @@ body {
 }
 
 .reference-container.north {
-    align-items: flex-end;
-    padding-bottom: 3vmin;
     border-bottom: 1px solid black;
 }
 
 .reference-container.south {
-    align-items: flex-start;
-    padding-top: 3vmin;
     border-top: 1px solid black;
 }
 
 .reference-container.west {
-    justify-content: flex-end;
-    padding-right: 1vmin;
     border-right: 1px solid black;
 }
 
 .reference-container.east {
-    justify-content: flex-start;
-    padding-left: 1vmin;
     border-left: 1px solid black;
 }
 
@@ -221,23 +207,23 @@ body {
 
 /* The positions of specific spots. */
 #spot-0 {
-    left: 29%;
-    top: 29%;
+    left: 27%;
+    top: 27%;
 }
 
 #spot-1 {
-    left: 69%;
-    top: 29%;
+    left: 71%;
+    top: 27%;
 }
 
 #spot-2 {
-    left: 29%;
-    top: 69%;
+    left: 27%;
+    top: 71%;
 }
 
 #spot-3 {
-    left: 69%;
-    top: 69%;
+    left: 71%;
+    top: 71%;
 }
 
 /* ======================
@@ -377,11 +363,11 @@ svg {
 
 #move-history {
     mask-image: linear-gradient(
-        to right,
-        transparent,
-        black 10px,
-        black calc(100% - 10px),
-        transparent
+            to right,
+            transparent,
+            black 10px,
+            black calc(100% - 10px),
+            transparent
     );
 }
 
@@ -408,14 +394,16 @@ svg {
     cursor: pointer;
 }
 
-.move.white{
+.move.white {
     color: white;
     border-color: white;
 }
-.move.black{
+
+.move.black {
     color: black;
     border-color: black;
 }
+
 .move.current {
     border-width: 2px;
 }
@@ -435,5 +423,53 @@ svg {
 
 .form-switch .form-check-input:focus {
     border-color: var(--bs-success);
-    box-shadow: 0 0 0 .25rem rgba(25,135,84,.25);
+    box-shadow: 0 0 0 .25rem rgba(25, 135, 84, .25);
+}
+
+/* ==================
+   Sensei switch
+   ================== */
+
+.sensei-switch-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sensei-label {
+    user-select: none;
+}
+
+/* Switch personalizzato */
+.sensei-switch-wrapper .form-check-input {
+    width: 3em;
+    height: 1.6em;
+    cursor: pointer;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.sensei-switch-wrapper .form-check-input:checked {
+    background-color: #1D9E75;
+    border-color: #1D9E75;
+}
+
+.sensei-switch-wrapper .form-check-input:focus {
+    box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.25);
+    border-color: #1D9E75;
+}
+
+/* ==================
+   Sensei
+   ================== */
+
+.annotation {
+    position: absolute;
+    z-index: 10;
+    color: rgb(188, 240, 180);
+    font-size: 5vmin;
+    pointer-events: none;
+}
+
+.annotation.optimal {
+    color: rgb(249, 229, 52);
 }
