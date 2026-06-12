@@ -57,6 +57,7 @@ export default class Position {
         const urlParams = new URLSearchParams(window.location.search);
         const b = urlParams.get('b');
         const w = urlParams.get('w');
+        console.log("black", b, "white", w)
 
         // If 'b' and 'w' parameters are not present, return starting position
         if (!b || !w) {
