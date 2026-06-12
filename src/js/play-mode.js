@@ -42,6 +42,13 @@ export default class PlayMode {
             this.updateHistory();
         });
 
+        let position = this.board.currentPosition;
+        while (position.nextPosition != null) {
+            position = position.nextPosition;
+            this.moveHistory.play(position);
+        }
+        this.moveHistory.updateCurrent(this.board.currentPosition.moveNumber);
+
         this.first = document.getElementById('first');
         this.first.addEventListener('click', () => {
             let curPosition = this.board.currentPosition;
