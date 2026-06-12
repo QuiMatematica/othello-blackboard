@@ -84,7 +84,25 @@ export default class Position {
         // Determine turn (default to BLACK)
         const turn = urlParams.get('t') === '2' ? WHITE : BLACK;
 
-        return new Position(grid, turn);
+        const thisPosition = new Position(grid, turn);
+
+        const sequence = urlParams.get('s');
+        if (sequence) {
+            let position = thisPosition;
+
+            const BASE64 =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+            for (let i = 0; i < sequence.length; i++) {
+                const char = sequence[i];
+                const value = BASE64.indexOf(char);
+                let x = Math.floor(value / 8);
+                let y = value % 8;
+                position = position.playStone(new Square(x, y));
+            }
+        }
+
+        return thisPosition;
     }
 
     setStone(square, color) {
