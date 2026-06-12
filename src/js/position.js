@@ -64,6 +64,9 @@ export default class Position {
             return this.getStartingPosition();
         }
 
+        const blackBits = BigInt("0x" + b);
+        const whiteBits = BigInt("0x" + w);
+
         // Parse the position from 'b' and 'w' parameters
         const grid = this.buildGrid();
         for (let x = 0; x < 8; x++) {
@@ -71,9 +74,9 @@ export default class Position {
 
                 const pos = BigInt(x * 8 + y);
 
-                if ((b & (1n << pos)) !== 0n) {
+                if ((blackBits & (1n << pos)) !== 0n) {
                     grid[x][y] = BLACK;
-                } else if ((w & (1n << pos)) !== 0n) {
+                } else if ((whiteBits & (1n << pos)) !== 0n) {
                     grid[x][y] = WHITE;
                 }
             }
