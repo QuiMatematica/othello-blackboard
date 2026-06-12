@@ -46,7 +46,9 @@ export default class Blackboard {
         });
         document.getElementById('set-tab').addEventListener('click', () => {
             this.board.cleanEvaluations();
-            this.senseiApi.stop();
+            if (this.senseiOn) {
+                this.senseiApi.stop();
+            }
             this.currentMode = this.editMode;
             console.log("Edit mode");
         })
