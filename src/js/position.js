@@ -86,7 +86,7 @@ export default class Position {
 
         const thisPosition = new Position(grid, turn);
 
-        const sequence = urlParams.get('s');
+        const sequence = urlParams.get('s').replace(/-/g, "+").replace(/_/g, "/");
         if (sequence) {
             let position = thisPosition;
 
