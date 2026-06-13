@@ -202,6 +202,9 @@ $assets = require __DIR__ . '/assets.php';
                         <i class="bi bi-square" style="color: black;"></i><i class="bi bi-square"
                                                                              style="color: black;"></i>
                     </button>
+                    <button id="reset-app" class="btn btn-success lh-1 mx-2">
+                        <i class="bi bi-arrow-clockwise" style="font-size: 2em;"></i>
+                    </button>
                 </div>
             </div>
         </div>
