@@ -114,12 +114,19 @@ export default class Board {
         }
     }
 
+    resetNext() {
+        for (const div of this.gameBoard.querySelectorAll('.next')) {
+            div.classList.remove('next');
+        }
+    }
+
     resetGame() {
         for (const div of this.gameBoard.querySelectorAll('.square')) {
             div.classList.remove('black');
             div.classList.remove('white');
             div.classList.remove('flip');
             div.classList.remove('last');
+            div.classList.remove('next');
         }
     }
 
@@ -144,13 +151,23 @@ export default class Board {
             }
         }
         if (position.played != null) {
-            const playSquare = this.grid[position.played.y][position.played.x];
-            playSquare.classList.add('last');
+            const square = this.grid[position.played.y][position.played.x];
+            square.classList.add('last');
+        }
+        if (position.nextPosition != null && position.nextPosition.played != null) {
+            const square = this.grid[position.nextPosition.played.y][position.nextPosition.played.x];
+            square.classList.add('next');
         }
     }
 
     playPosition(position) {
         this.resetLast();
+        this.resetNext();
+
+        if (position.nextPosition != null && position.nextPosition.played != null) {
+            const square = this.grid[position.nextPosition.played.y][position.nextPosition.played.x];
+            square.classList.add('next');
+        }
 
         // Place the stone by adding the relevant color class.
         const playSquare = this.grid[position.played.y][position.played.x];

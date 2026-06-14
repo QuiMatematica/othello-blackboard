@@ -259,6 +259,11 @@ svg {
     stroke: black;
 }
 
+.next .stone {
+    fill: none;
+    stroke: black;
+}
+
 /* When we flip a stone, we use the .flip class temporarily to animate the
  * change. There are separate animations for black & white because you can't
  * use CSS filters to change the stroke and fill colors in an SVG. */
