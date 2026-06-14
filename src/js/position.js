@@ -27,7 +27,7 @@ export default class Position {
         this.moveNumber = 0;
     }
 
-    static getEmptyPosition() {
+    static buildGrid() {
         const grid = [];
         for (let x = 0; x < 8; x++) {
             const row = [];
@@ -36,23 +36,73 @@ export default class Position {
                 row.push(EMPTY);
             }
         }
-        return new Position(grid, BLACK)
+        return grid;
+    }
+    
+    static getEmptyPosition() {
+        return new Position(this.buildGrid(), BLACK)
     }
 
     static getStartingPosition() {
-        const grid = [];
-        for (let x = 0; x < 8; x++) {
-            const row = [];
-            grid.push(row);
-            for (let y = 0; y < 8; y++) {
-                row.push(EMPTY);
-            }
-        }
+        const grid = this.buildGrid();
         grid[3][3] = WHITE;
         grid[4][4] = WHITE;
         grid[3][4] = BLACK;
         grid[4][3] = BLACK;
         return new Position(grid, BLACK)
+    }
+    
+    static readPosition() {
+        // Parse URL query parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const b = urlParams.get('b');
+        const w = urlParams.get('w');
+        console.log("black", b, "white", w)
+
+        // If 'b' and 'w' parameters are not present, return starting position
+        if (!b || !w) {
+            return this.getStartingPosition();
+        }
+
+        const blackBits = BigInt("0x" + b);
+        const whiteBits = BigInt("0x" + w);
+
+        // Parse the position from 'b' and 'w' parameters
+        const grid = this.buildGrid();
+        for (let x = 0; x < 8; x++) {
+            for (let y = 0; y < 8; y++) {
+
+                const pos = BigInt(x * 8 + y);
+
+                if ((blackBits & (1n << pos)) !== 0n) {
+                    grid[x][y] = BLACK;
+                } else if ((whiteBits & (1n << pos)) !== 0n) {
+                    grid[x][y] = WHITE;
+                }
+            }
+        }
+        // Determine turn (default to BLACK)
+        const turn = urlParams.get('t') === '2' ? WHITE : BLACK;
+
+        const thisPosition = new Position(grid, turn);
+
+        const sequence = urlParams.get('s').replace(/-/g, "+").replace(/_/g, "/");
+        if (sequence) {
+            let position = thisPosition;
+
+            const BASE64 =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+            for (let i = 0; i < sequence.length; i++) {
+                const char = sequence[i];
+                const value = BASE64.indexOf(char);
+                let x = Math.floor(value / 8);
+                let y = value % 8;
+                position = position.playStone(new Square(x, y));
+            }
+        }
+
+        return thisPosition;
     }
 
     setStone(square, color) {

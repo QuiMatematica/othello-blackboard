@@ -57,6 +57,10 @@ export default class EditMode {
             this.update();
         });
 
+        document.getElementById('reset-app').addEventListener('click', () => {
+            location.reload();
+        })
+
     }
 
     onClick(x, y) {

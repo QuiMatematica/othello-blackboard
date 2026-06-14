@@ -19,7 +19,7 @@ export default class Blackboard {
 
     constructor(senseiApi) {
         this.senseiApi = senseiApi;
-        this.currentPosition = Position.getStartingPosition();
+        this.currentPosition = Position.readPosition();
 
         this.board = new Board();
         this.board.setPosition(this.currentPosition);
