@@ -8,6 +8,7 @@ export default class Blackboard {
 
     senseiOn = false;
     senseiApi;
+    startingPosition;
     currentPosition;
     playMode;
     editMode;
@@ -19,7 +20,8 @@ export default class Blackboard {
 
     constructor(senseiApi) {
         this.senseiApi = senseiApi;
-        this.currentPosition = Position.readPosition();
+        this.startingPosition = Position.readPosition()
+        this.currentPosition = this.startingPosition.clone();
 
         this.board = new Board();
         this.board.setPosition(this.currentPosition);
@@ -40,9 +42,7 @@ export default class Blackboard {
         this.currentMode = this.playMode;
 
         document.getElementById('play-tab').addEventListener('click', () => {
-            this.currentMode = this.playMode;
-            this.playMode.updateEvaluation();
-            console.log("Play mode");
+            this.openPlayMode();
         });
         document.getElementById('set-tab').addEventListener('click', () => {
             this.board.cleanEvaluations();
@@ -52,6 +52,12 @@ export default class Blackboard {
             this.currentMode = this.editMode;
             console.log("Edit mode");
         })
+    }
+
+    openPlayMode() {
+        this.currentMode = this.playMode;
+        this.playMode.updateEvaluation();
+        console.log("Play mode");
     }
 
     onClick(e) {
@@ -116,5 +122,12 @@ export default class Blackboard {
         }
     };
 
+    reset() {
+        this.update(this.startingPosition.clone());
+        this.playMode.reset();
+        this.playMode.update();
+        this.editMode.update();
+        document.getElementById('play-tab').click();
+    }
 
 }

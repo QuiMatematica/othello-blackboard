@@ -3,11 +3,11 @@ import Square from "./square";
 
 export default class EditMode {
 
-    board;
+    blackboard;
     currentColor;
 
-    constructor(board) {
-        this.board = board;
+    constructor(blackboard) {
+        this.blackboard = blackboard;
         this.currentColor = BLACK;
 
         document.getElementById('black-stone').addEventListener('change', (e) => {
@@ -27,38 +27,38 @@ export default class EditMode {
         });
 
         document.getElementById('black-turn').addEventListener('change', () => {
-            let position = this.board.currentPosition;
+            let position = this.blackboard.currentPosition;
             position = position.changeTurn(BLACK);
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
+            this.blackboard.update(position);
+            this.blackboard.playMode.update();
+            this.blackboard.playMode.moveHistory.reset();
         });
         document.getElementById('white-turn').addEventListener('change', () => {
-            let position = this.board.currentPosition;
+            let position = this.blackboard.currentPosition;
             position = position.changeTurn(WHITE);
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
+            this.blackboard.update(position);
+            this.blackboard.playMode.update();
+            this.blackboard.playMode.moveHistory.reset();
         });
 
         document.getElementById('reset-position').addEventListener('click', () => {
             const position = Position.getStartingPosition();
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
+            this.blackboard.update(position);
+            this.blackboard.playMode.update();
+            this.blackboard.playMode.moveHistory.reset();
             this.update();
         });
 
         document.getElementById('empty-position').addEventListener('click', () => {
             const position = Position.getEmptyPosition();
-            this.board.update(position);
-            this.board.playMode.update();
-            this.board.playMode.moveHistory.reset();
+            this.blackboard.update(position);
+            this.blackboard.playMode.update();
+            this.blackboard.playMode.moveHistory.reset();
             this.update();
         });
 
         document.getElementById('reset-app').addEventListener('click', () => {
-            location.reload();
+            this.blackboard.reset();
         })
 
     }
@@ -66,11 +66,11 @@ export default class EditMode {
     onClick(x, y) {
         console.log("EditMode: Click on " + x + " " + y);
         const square = new Square(parseInt(x), parseInt(y));
-        let position = this.board.currentPosition;
+        let position = this.blackboard.currentPosition;
         position = position.setStone(square, this.currentColor);
-        this.board.update(position);
-        this.board.playMode.update();
-        this.board.playMode.moveHistory.reset();
+        this.blackboard.update(position);
+        this.blackboard.playMode.update();
+        this.blackboard.playMode.moveHistory.reset();
         this.update();
     }
 
@@ -86,7 +86,7 @@ export default class EditMode {
     }
 
     update() {
-        this.board.currentPosition.turn === BLACK ? document.getElementById('black-turn').checked = true : document.getElementById('white-turn').checked = true;
+        this.blackboard.currentPosition.turn === BLACK ? document.getElementById('black-turn').checked = true : document.getElementById('white-turn').checked = true;
     }
 
 }
