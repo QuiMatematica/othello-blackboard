@@ -4,7 +4,7 @@ import Square from "./square";
 
 export default class PlayMode {
 
-    board;
+    blackboard;
     scoreElements = {};
     turnElement;
     first;
@@ -14,20 +14,20 @@ export default class PlayMode {
     moveHistory;
     senseiSwitch;
 
-    constructor(board) {
-        this.board = board;
+    constructor(blackboard) {
+        this.blackboard = blackboard;
         this.scoreElements.black = document.getElementById('black-score');
         this.scoreElements.white = document.getElementById('white-score');
         this.turnElement = document.getElementById('turn');
         this.moveHistory = new MoveHistory((e) => {
             const target = e.currentTarget;
             const number = Number(target.dataset.number);
-            let currentPosition = this.board.currentPosition;
+            let currentPosition = this.blackboard.currentPosition;
             if (number === currentPosition.moveNumber) {
                 return;
             }
             if (number === currentPosition.moveNumber + 1) {
-                this.board.play(currentPosition.nextPosition);
+                this.blackboard.play(currentPosition.nextPosition);
             } else {
                 while (currentPosition.moveNumber !== number) {
                     if (number < currentPosition.moveNumber) {
@@ -36,61 +36,56 @@ export default class PlayMode {
                         currentPosition = currentPosition.nextPosition;
                     }
                 }
-                this.board.update(currentPosition);
+                this.blackboard.update(currentPosition);
             }
             this.update();
             this.updateHistory();
         });
 
-        let position = this.board.currentPosition;
-        while (position.nextPosition != null) {
-            position = position.nextPosition;
-            this.moveHistory.play(position);
-        }
-        this.moveHistory.updateCurrent(this.board.currentPosition.moveNumber);
+        this.reset();
 
         this.first = document.getElementById('first');
         this.first.addEventListener('click', () => {
-            let curPosition = this.board.currentPosition;
+            let curPosition = this.blackboard.currentPosition;
             let prevPosition = curPosition.prevPosition;
             if (prevPosition != null) {
                 while (prevPosition != null) {
                     curPosition = prevPosition;
                     prevPosition = curPosition.prevPosition;
                 }
-                this.board.update(curPosition);
+                this.blackboard.update(curPosition);
                 this.update();
                 this.updateHistory();
             }
         })
         this.prev = document.getElementById('prev');
         this.prev.addEventListener('click', () => {
-            const prevPosition = this.board.currentPosition.prevPosition;
+            const prevPosition = this.blackboard.currentPosition.prevPosition;
             if (prevPosition != null) {
-                this.board.update(prevPosition);
+                this.blackboard.update(prevPosition);
                 this.update();
                 this.updateHistory();
             }
         })
         this.next = document.getElementById('next');
         this.next.addEventListener('click', () => {
-            const nextPosition = this.board.currentPosition.nextPosition;
+            const nextPosition = this.blackboard.currentPosition.nextPosition;
             if (nextPosition != null) {
-                this.board.play(nextPosition);
+                this.blackboard.play(nextPosition);
                 this.update();
                 this.updateHistory();
             }
         })
         this.last = document.getElementById('last');
         this.last.addEventListener('click', () => {
-            let curPosition = this.board.currentPosition;
+            let curPosition = this.blackboard.currentPosition;
             let nextPosition = curPosition.nextPosition;
             if (nextPosition != null) {
                 while (nextPosition != null) {
                     curPosition = nextPosition;
                     nextPosition = curPosition.nextPosition;
                 }
-                this.board.update(curPosition);
+                this.blackboard.update(curPosition);
                 this.update();
                 this.updateHistory();
             }
@@ -104,17 +99,27 @@ export default class PlayMode {
         })
     }
 
+    reset() {
+        this.moveHistory.reset();
+        let position = this.blackboard.currentPosition;
+        while (position.nextPosition != null) {
+            position = position.nextPosition;
+            this.moveHistory.play(position);
+        }
+        this.moveHistory.updateCurrent(this.blackboard.currentPosition.moveNumber);
+    }
+
     onClick(x, y) {
-        const current = this.board.currentPosition;
+        const current = this.blackboard.currentPosition;
 
         const square = new Square(parseInt(x), parseInt(y));
         const nextPosition = current.playStone(square);
         // If the play was valid, update the views.
         if (nextPosition != null) {
-            this.board.play(nextPosition);
+            this.blackboard.play(nextPosition);
             this.moveHistory.play(nextPosition);
             this.update();
-            this.board.editMode.update();
+            this.blackboard.editMode.update();
         }
     }
 
@@ -135,7 +140,7 @@ export default class PlayMode {
     }
 
     updateScore() {
-        const scores = this.board.currentPosition.countStones();
+        const scores = this.blackboard.currentPosition.countStones();
         for (const color in scores) {
             this.scoreElements[color].innerHTML = scores[color];
         }
@@ -145,7 +150,7 @@ export default class PlayMode {
         this.turnElement.classList.remove('bi-caret-left-fill');
         this.turnElement.classList.remove('bi-caret-right-fill');
         this.turnElement.classList.remove('bi-sign-stop');
-        const position = this.board.currentPosition;
+        const position = this.blackboard.currentPosition;
         if (position.gameOver) {
             this.turnElement.classList.add('bi-sign-stop');
             this.turnElement.style.color = 'black';
@@ -160,7 +165,7 @@ export default class PlayMode {
     }
 
     updateButtons() {
-        const position = this.board.currentPosition;
+        const position = this.blackboard.currentPosition;
         this.first.disabled = (position.prevPosition == null);
         this.prev.disabled = (position.prevPosition == null);
         this.next.disabled = (position.nextPosition == null);
@@ -168,23 +173,23 @@ export default class PlayMode {
     }
 
     updateHistory() {
-        const position = this.board.currentPosition;
+        const position = this.blackboard.currentPosition;
         this.moveHistory.updateCurrent(position.moveNumber);
     }
 
     updateEvaluation() {
         const senseiActive = this.senseiSwitch.checked;
-        if (senseiActive && this.board.currentMode === this) {
-            const position = this.board.currentPosition;
+        if (senseiActive && this.blackboard.currentMode === this) {
+            const position = this.blackboard.currentPosition;
             const senseiStr = position.toSenseiStr();
             console.log("Sensei str: " + senseiStr);
-            this.board.senseiApi.pasteBoard(senseiStr);
-            this.board.senseiApi.evaluate();
+            this.blackboard.senseiApi.pasteBoard(senseiStr);
+            this.blackboard.senseiApi.evaluate();
         }
         else {
-            if (this.board.senseiOn) {
-                this.board.senseiApi.stop();
-                this.board.board.cleanEvaluations();
+            if (this.blackboard.senseiOn) {
+                this.blackboard.senseiApi.stop();
+                this.blackboard.board.cleanEvaluations();
             }
         }
     }

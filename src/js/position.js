@@ -105,6 +105,21 @@ export default class Position {
         return thisPosition;
     }
 
+    clone() {
+        const grid = this.copyGrid();
+        const turn = this.turn;
+        const newPosition = new Position(grid, turn);
+
+        let currentPosition = this;
+        let newCurrentPosition = newPosition;
+        while (currentPosition.nextPosition) {
+            newCurrentPosition = newCurrentPosition.playStone(currentPosition.nextPosition.played);
+            currentPosition = currentPosition.nextPosition;
+        }
+
+        return newPosition;
+    }
+
     setStone(square, color) {
         const x = square.x;
         const y = square.y;
