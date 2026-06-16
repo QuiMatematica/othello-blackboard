@@ -86,16 +86,24 @@ export default class Position {
 
         const thisPosition = new Position(grid, turn);
 
-        const sequence = urlParams.get('s').replace(/-/g, "+").replace(/_/g, "/");
+        const BASE64MOD =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+
+        const played = urlParams.get('p');
+        if (played && played.length > 0) {
+            const value = BASE64MOD.indexOf(played[0]);
+            let x = Math.floor(value / 8);
+            let y = value % 8;
+            thisPosition.played = new Square(x, y);
+        }
+
+        const sequence = urlParams.get('s');
         if (sequence) {
             let position = thisPosition;
 
-            const BASE64 =
-                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
             for (let i = 0; i < sequence.length; i++) {
                 const char = sequence[i];
-                const value = BASE64.indexOf(char);
+                const value = BASE64MOD.indexOf(char);
                 let x = Math.floor(value / 8);
                 let y = value % 8;
                 position = position.playStone(new Square(x, y));
@@ -109,6 +117,7 @@ export default class Position {
         const grid = this.copyGrid();
         const turn = this.turn;
         const newPosition = new Position(grid, turn);
+        newPosition.played = this.played;
 
         let currentPosition = this;
         let newCurrentPosition = newPosition;
